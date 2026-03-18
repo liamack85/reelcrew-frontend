@@ -2,10 +2,10 @@ import { NavLink } from "react-router";
 
 import { useAuth } from "../auth/AuthContext";
 
-export default function Navbar() {
+export default function Sidebar() {
   const { token, logout } = useAuth();
   return (
-    <header id="navbar">
+    <header id="sidebar">
       <NavLink id="brand" to="/">
         <p>Frontend Template</p>
       </NavLink>

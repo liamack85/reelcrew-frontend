@@ -1,7 +1,7 @@
 # Frontend Template
 
 You can use this repository as a template for your frontend. It provides a very simple
-React Router layout with a navbar and an `AuthContext` with login and register pages.
+React Router layout with a sidebar and an `AuthContext` with login and register pages.
 
 ## Usage
 
