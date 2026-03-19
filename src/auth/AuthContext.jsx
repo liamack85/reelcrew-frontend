@@ -1,4 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 const API = import.meta.env.VITE_API;
 
@@ -17,9 +22,9 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    if (!response.ok) throw Error(await response.text());
+    const result = await response.json();
+    setToken(result.token);
   };
 
   const login = async (credentials) => {
@@ -28,9 +33,9 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    if (!response.ok) throw Error(await response.text());
+    const result = await response.json();
+    setToken(result.token);
   };
 
   const logout = () => {
@@ -39,11 +44,16 @@ export function AuthProvider({ children }) {
   };
 
   const value = { token, register, login, logout };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) throw Error("useAuth must be used within an AuthProvider");
+  if (!context)
+    throw Error("useAuth must be used within an AuthProvider");
   return context;
 }
