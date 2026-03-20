@@ -3,15 +3,22 @@ import { NavLink } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Sidebar() {
-  const { token, logout } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <header id="sidebar">
       <NavLink id="brand" to="/">
-        <p>Frontend Template</p>
+        <p>ReelCrew</p>
       </NavLink>
       <nav>
-        {token ? (
-          <button onClick={logout}>Log out</button>
+        <NavLink to="/">Splash</NavLink>
+        <NavLink to="/films">Movies</NavLink>
+        <NavLink to="/groups">Group</NavLink>
+        {user && <NavLink to={`/users/${user.id}`}>Profile</NavLink>}
+        {user ? (
+          <div>
+            <p>{user.display_name}</p>
+            <button onClick={logout}>Log out</button>
+          </div>
         ) : (
           <NavLink to="/login">Log in</NavLink>
         )}

@@ -10,11 +10,16 @@ const API = import.meta.env.VITE_API;
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
   useEffect(() => {
     if (token) sessionStorage.setItem("token", token);
   }, [token]);
+
+  useEffect(() => {
+    if (token) fetchMe(token);
+  }, []);
 
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
@@ -25,6 +30,7 @@ export function AuthProvider({ children }) {
     if (!response.ok) throw Error(await response.text());
     const result = await response.json();
     setToken(result.token);
+    fetchMe(result.token);
   };
 
   const login = async (credentials) => {
@@ -36,14 +42,25 @@ export function AuthProvider({ children }) {
     if (!response.ok) throw Error(await response.text());
     const result = await response.json();
     setToken(result.token);
+    fetchMe(result.token);
   };
 
   const logout = () => {
     setToken(null);
+    setUser(null);
     sessionStorage.removeItem("token");
   };
 
-  const value = { token, register, login, logout };
+  const fetchMe = async (token) => {
+    const response = await fetch(API + "/users/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response.ok) return;
+    const result = await response.json();
+    setUser(result);
+  };
+
+  const value = { token, user, register, login, logout };
   return (
     <AuthContext.Provider value={value}>
       {children}
