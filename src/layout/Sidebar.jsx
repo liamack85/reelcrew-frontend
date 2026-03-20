@@ -13,7 +13,7 @@ export default function Sidebar() {
         <NavLink to="/">Splash</NavLink>
         <NavLink to="/films">Movies</NavLink>
         <NavLink to="/groups">Group</NavLink>
-        {user && <NavLink to={`/users/${user.id}`}>Profile</NavLink>}
+        {user && <NavLink to={"/users/me"}>Profile</NavLink>}
         {user ? (
           <div>
             <p>{user.display_name}</p>
