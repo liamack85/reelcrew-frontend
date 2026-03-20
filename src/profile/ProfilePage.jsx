@@ -5,13 +5,19 @@ export default function ProfilePage() {
   if (!user) return <p>Loading...</p>;
 
   return (
-    <section>
-      <h1>{user.display_name}</h1>
-      <p>@{user.username}</p>
-      <p>recently watched</p>
-      <p>watch groups</p>
+    <section id="profile-header-bar">
+      <p>🌮</p>
+      <div>
+        <p>{user.display_name}</p>
+        <div id="profile-header-bar-user-info">
+          <p>@{user.username}</p>
+          <p>Member since 2024</p>
+        </div>
+        <p>chips</p>
+      </div>
     </section>
   );
 }
 
 // id, username, display_name, email
+// need recently watched and group summary
