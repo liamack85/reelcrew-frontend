@@ -2,7 +2,7 @@ const API = import.meta.env.VITE_API;
 
 export async function getGroups() {
   try {
-    const response = await fetch(API);
+    const response = await fetch(API+"/groups");
     const result = await response.json();
     return result;
   } catch (e) {
@@ -12,7 +12,7 @@ export async function getGroups() {
 
 export async function getGroupById(id) {
   try {
-    const response = await fetch(API+id);
+    const response = await fetch(API+"/groups/"+id);
     const result = await response.json();
     return result;
   } catch (e) {
