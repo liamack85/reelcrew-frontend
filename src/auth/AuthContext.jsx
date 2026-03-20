@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (token) fetchMe(token);
-  }, []);
+  }, [token]);
 
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
