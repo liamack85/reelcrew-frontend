@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import ProfilePage from "./profile/ProfilePage";
 
 export default function App() {
   return (
