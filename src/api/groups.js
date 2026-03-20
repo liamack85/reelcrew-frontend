@@ -22,7 +22,7 @@ export async function getGroupById(id) {
 
 export async function getGroupByUserId(userId) {
   try {
-    const response = await fetch(API+userId);
+    const response = await fetch(API+"/groups"+userId);
     const result = await response.json();
     return result;
   } catch (e) {
