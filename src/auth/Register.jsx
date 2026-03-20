@@ -17,7 +17,7 @@ export default function Register() {
     const email = formData.get("email");
     try {
       await register({ username, password, display_name, email });
-      navigate("/users/me");
+      navigate("/");
     } catch (e) {
       setError(e.message);
     }
