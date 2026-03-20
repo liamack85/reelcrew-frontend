@@ -1,4 +1,4 @@
-const API = import.meta.end.VITE_API;
+const API = import.meta.env.VITE_API;
 
 export async function getFilms() {
   try {
@@ -37,7 +37,7 @@ export async function addToWatchlist(token, filmId) {
 }
 
 export async function removeFromWatchlist(token, userFilmId) {
-  const response = await fetch(API + "/user-films" + userFilmId, {
+  const response = await fetch(API + "/user-films/" + userFilmId, {
     method: "DELETE",
     headers: { Authorization: "Bearer " + token },
   });
