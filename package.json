@@ -1,6 +1,9 @@
 {
   "name": "reelcrew-frontend",
   "type": "module",
+  "imports": {
+    "#*": "./*.js"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
