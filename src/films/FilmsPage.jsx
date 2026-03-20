@@ -3,7 +3,7 @@ import { getFilms } from "../api/films";
 import FilmCard from "./FilmCard";
 
 export default function FilmsPage() {
-  const [films, setFilms] = useState([]);
+  const [films, setFilms] = useState(null);
   const [query, setQuery] = useState("");
   const debounce = useRef();
 
@@ -18,10 +18,12 @@ export default function FilmsPage() {
     return () => clearTimeout(debounce.current);
   }, [query]);
 
+  if (films === null) return <p>Loading...</p>;
+
   return (
     <section>
       <h1>Films</h1>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <input
           type="search"
           placeholder="Search films..."
