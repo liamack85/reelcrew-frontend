@@ -23,7 +23,7 @@ export default function Sidebar() {
         <NavLink to="/groups">Group</NavLink>
         {user ? (
           <div id="avatar-bar">
-            <p>🌮</p>
+            <p id="avatar">🌮</p>
             <p>{user.display_name}</p>
             <button onClick={handleLogout}>Log out</button>
           </div>
