@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { getFilms } from "../api/films";
 import FilmCard from "./FilmCard";
+import Stack from "@mui/material/Stack";
 
-export default function FilmsPage() {
+export default function FilmsPage({ token }) {
   const [films, setFilms] = useState(null);
   const [query, setQuery] = useState("");
   const debounce = useRef();
@@ -34,11 +35,15 @@ export default function FilmsPage() {
       {films.length === 0 ? (
         <p>No films found.</p>
       ) : (
-        <ul>
+        <Stack
+          spacing={2}
+          component="ul"
+          sx={{ listStyle: "none", padding: 0 }}
+        >
           {films.map((film) => (
-            <FilmCard key={film.id} film={film} />
+            <FilmCard key={film.id} film={film} token={token} />
           ))}
-        </ul>
+        </Stack>
       )}
     </section>
   );
