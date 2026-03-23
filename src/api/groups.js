@@ -2,7 +2,7 @@ const API = import.meta.env.VITE_API;
 
 export async function getGroups() {
   try {
-    const response = await fetch(API+"watch-groups");
+    const response = await fetch(API+"/watch-groups");
     const result = await response.json();
     return result;
   } catch (e) {
