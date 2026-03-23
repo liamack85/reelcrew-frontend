@@ -1,6 +1,13 @@
 import { addToWatchlist } from "../api/films";
 import { useState } from "react";
 import { Link } from "react-router";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
 
 export default function FilmCard({ film, token }) {
   const [added, setAdded] = useState(false);
@@ -15,20 +22,44 @@ export default function FilmCard({ film, token }) {
   };
 
   return (
-    <li>
-      <img src={film.poster_url} alt={film.title} />
-      <Link to={"/films/" + film.id}>
-        <h2>{film.title}</h2>
-      </Link>
-      <h3>{film.genre}</h3>
-      <h3>{film.year}</h3>
-      <h3>{film.director}</h3>
-      {film.rating && <p>⭐ {film.rating}</p>}
-      {token && (
-        <button onClick={handleAddToWatchlist} disabled={added}>
-          Add to Watchlist
-        </button>
-      )}
-    </li>
+    <Card sx={{ display: "flex", gap: 2, padding: 1 }}>
+      <CardMedia
+        component="img"
+        image={film.poster_url}
+        alt={film.title}
+        sx={{ width: 80, objectFit: "cover", borderRadius: 1 }}
+      />
+      <CardContent sx={{ flex: 1, padding: 0 }}>
+        <Typography
+          variant="h6"
+          component={Link}
+          to={"/films/" + film.id}
+          sx={{ textDecoration: "none", color: "inherit" }}
+        >
+          {film.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {film.year} · {film.director}
+        </Typography>
+        {film.genre && (
+          <Chip label={film.genre} size="small" sx={{ mt: 0.5 }} />
+        )}
+        {film.rating && (
+          <Typography variant="body2">⭐ {film.rating}</Typography>
+        )}
+      </CardContent>
+      <CardActions sx={{ alignSelf: "flex-end", padding: 0 }}>
+        {token && (
+          <Button
+            size="small"
+            variant="contained"
+            onClick={handleAddToWatchlist}
+            disabled={added}
+          >
+            {added ? "Added!" : "+ Watchlist"}
+          </Button>
+        )}
+      </CardActions>
+    </Card>
   );
 }
