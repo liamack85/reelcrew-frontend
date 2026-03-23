@@ -20,7 +20,7 @@ export default function WatchPage() {
       }
     }
     fetchData();
-  }, [id]);
+  }, [id, token]);
 
   if (error) return <p>{error}</p>;
   if (!watch) return <p>No film assigned yet.</p>;
