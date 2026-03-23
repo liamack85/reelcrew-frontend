@@ -6,6 +6,7 @@ import Register from "./auth/Register";
 import ProfilePage from "./profile/ProfilePage";
 import SplashPage from "./splashPage/SplashPage";
 import FilmsPage from "./films/FilmsPage";
+import GroupsPage from "./groups/GroupsPage";
 import WatchPage from "./watches/WatchPage";
 import FilmDetail from "./films/FilmDetail";
 
@@ -15,6 +16,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<SplashPage />} />
+        <Route path="/groups" element={<GroupsPage />} />
         <Route path="/films" element={<FilmsPage />} />
         <Route path="/test/:id" element={<WatchPage />} />
         <Route path="/films/:id" element={<FilmDetail token={token} />} />
