@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { getFilms } from "../api/films";
+import { useAuth } from "../auth/AuthContext";
 import FilmCard from "./FilmCard";
 import Stack from "@mui/material/Stack";
 
-export default function FilmsPage({ token }) {
+export default function FilmsPage() {
+  const { token } = useAuth();
   const [films, setFilms] = useState(null);
   const [query, setQuery] = useState("");
   const debounce = useRef();

@@ -1,8 +1,10 @@
 import { getFilmById } from "#src/api/films";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useAuth } from "../auth/AuthContext";
 
-export default function FilmDetail({ token }) {
+export default function FilmDetail() {
+  const { token } = useAuth();
   const { id } = useParams();
   const [film, setFilm] = useState(null);
 
