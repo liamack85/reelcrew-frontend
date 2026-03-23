@@ -58,14 +58,18 @@ export async function joinGroup(token, id) {
   return result;
 }
 
-export async function leaveGroup(token, id) {
+export async function leaveGroup(token, groupId) {
   if (!token) {
     throw Error("You are not signed in.");
   }
 
-  const response = await fetch(API + "/groups/" + id, {
+  const response = await fetch(API + "/groups/" + groupId + "/members/me", {
     method: "DELETE",
-    headers: { Authorization: "Bearer " + token },
+    headers: { 
+      "Content-Type": "application/json",
+      Authorization: "Bearer" + token,
+    },
+    body: JSON.stringify({ from: "group_members" }),
   });
 
   if (!response.ok) {
