@@ -12,7 +12,7 @@ export async function getGroups() {
 
 export async function getGroupById(id) {
   try {
-    const response = await fetch(API+"/groups/"+id);
+    const response = await fetch(API+"/watch-groups/"+id);
     const result = await response.json();
     return result;
   } catch (e) {
