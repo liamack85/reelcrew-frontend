@@ -3,7 +3,7 @@ import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import ProfilePage from "./profile/ProfilePage";
-import SplashPage from "./layout/SplashPage";
+import SplashPage from "./splashPage/SplashPage";
 import FilmsPage from "./films/FilmsPage";
 
 export default function App() {
