@@ -9,7 +9,6 @@ export default function MemberList({ members }) {
       <ul>
         {members.map((member) => (
           <li key={member.userid} className="member-row">
-
             <div className="member-avatar">
               {getInitials(member.display_name)}
             </div>
@@ -24,10 +23,12 @@ export default function MemberList({ members }) {
               </p>
             </div>
 
-            <p className={member.status === "watched" ? "badge-watched" : "badge-pending"}>
+            <p
+              className={
+                member.status === "watched" ? "badge-watched" : "badge-pending"
+              }>
               {member.status === "watched" ? "Watched" : "Pending"}
             </p>
-
           </li>
         ))}
       </ul>
@@ -35,7 +36,7 @@ export default function MemberList({ members }) {
   );
 }
 
-function getInitials(name) {
+export function getInitials(name) {
   return name
     .split(" ")
     .map((word) => word[0])

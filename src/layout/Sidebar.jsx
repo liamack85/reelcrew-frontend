@@ -2,6 +2,7 @@ import { NavLink } from "react-router";
 import { useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 
+import UserAvatar from "./Avatar";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -64,6 +65,7 @@ export default function Sidebar() {
             ))}
           </List>
         </Box>
+        <UserAvatar />
       </Drawer>
     </Box>
   );
