@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router";
-import { useAuth } from "./auth/AuthContext";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -12,16 +11,14 @@ import FilmDetail from "./films/FilmDetail";
 import WatchForm from "./watches/WatchPageForm";
 
 export default function App() {
-  const { token } = useAuth();
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<SplashPage />} />
         <Route path="/groups" element={<GroupsPage />} />
-        <Route path="/films" element={<FilmsPage token={token} />} />
+        <Route path="/films" element={<FilmsPage />} />
         <Route path="/watch-group/:id" element={<WatchPage />} />
-        <Route path="/watch-group/:id/assign" element={<WatchForm />} />
-        <Route path="/films/:id" element={<FilmDetail token={token} />} />
+        <Route path="/films/:id" element={<FilmDetail />} />
         <Route path="/users/me" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
