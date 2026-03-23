@@ -18,7 +18,7 @@ export default function App() {
         <Route index element={<SplashPage />} />
         <Route path="/groups" element={<GroupsPage />} />
         <Route path="/films" element={<FilmsPage />} />
-        <Route path="/test/:id" element={<WatchPage />} />
+        <Route path="/watch-group/:id" element={<WatchPage />} />
         <Route path="/films/:id" element={<FilmDetail token={token} />} />
         <Route path="/users/me" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />
