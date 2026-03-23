@@ -9,6 +9,7 @@ import FilmsPage from "./films/FilmsPage";
 import GroupsPage from "./groups/GroupsPage";
 import WatchPage from "./watches/WatchPage";
 import FilmDetail from "./films/FilmDetail";
+import WatchForm from "./watches/WatchPageForm";
 
 export default function App() {
   const { token } = useAuth();
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/groups" element={<GroupsPage />} />
         <Route path="/films" element={<FilmsPage token={token} />} />
         <Route path="/watch-group/:id" element={<WatchPage />} />
+        <Route path="/watch-group/:id/assign" element={<WatchForm />} />
         <Route path="/films/:id" element={<FilmDetail token={token} />} />
         <Route path="/users/me" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />
