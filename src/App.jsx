@@ -8,6 +8,7 @@ import FilmsPage from "./films/FilmsPage";
 import GroupsPage from "./groups/GroupsPage";
 import WatchPage from "./watches/WatchPage";
 import FilmDetail from "./films/FilmDetail";
+import WatchForm from "./watches/WatchPageForm";
 
 export default function App() {
   return (
