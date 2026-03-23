@@ -36,4 +36,14 @@ export default [
       "react/prop-types": "off",
     },
   },
+  {
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [{ regex: "^@mui/[^/]+$" }],
+        },
+      ],
+    },
+  },
 ];
