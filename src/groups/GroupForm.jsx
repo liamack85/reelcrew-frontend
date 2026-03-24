@@ -3,7 +3,7 @@ import { createGroup } from "#src/api/groups";
 import { useAuth } from "../auth/AuthContext.jsx";
 
 export default function GroupForm({onCreated}) {
-  const {token, user} = useAuth();
+  const {token, user, openAuthModal} = useAuth();
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -32,7 +32,7 @@ export default function GroupForm({onCreated}) {
 
   return (
     <section>
-      <form action={handleForm}>
+      <form action={!token ? openAuthModal : handleForm}>
         <label>Group Name</label>
         <input required type="text" name="groupName" />
         <button type="submit">Create Group</button>
