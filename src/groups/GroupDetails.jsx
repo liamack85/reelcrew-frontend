@@ -27,9 +27,10 @@ export default function GroupDetails() {
       <Typography variant="h1">Group Details</Typography>
       <Link to="/groups">back to groups</Link>
       <Typography variant="h2">{group.name} <button>Join</button><button>Leave Group</button></Typography>
-      <p>Description: blah blah blah</p>
+      <p>Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique fugiat, aperiam nemo totam earum veniam, odit, molestias eius illo iure sequi ipsam neque veritatis! Assumenda enim ipsum eaque doloribus distinctio?</p>
       
       <ul>
+      <p>Active members: {groupMembers.length}</p>
       {groupMembers.map((member)=>(
         <li key={member.id}>
           <p>{member.username}
