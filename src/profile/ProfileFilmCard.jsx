@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 
 export default function FilmPoster({ film }) {
@@ -26,6 +27,11 @@ export default function FilmPoster({ film }) {
           sx={{ textDecoration: "none", color: "inherit" }}>
           {film.title}
         </Typography>
+        <Chip
+          label={film.status === "watched" ? "Watched" : "Watchlist"}
+          color={film.status === "watched" ? "success" : "default"}
+          size="small"
+        />
       </CardContent>
     </Card>
   );

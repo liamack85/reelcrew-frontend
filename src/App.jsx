@@ -10,6 +10,7 @@ import WatchPage from "./watches/WatchPage";
 import FilmDetail from "./films/FilmDetail";
 import WatchForm from "./watches/WatchPageForm";
 import GroupDetails from "./groups/GroupDetails";
+import UserWatchlist from "./userWatchlist/UserWatchlist";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/users/me" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/users/me/watchlist" element={<UserWatchlist />} />
       </Route>
     </Routes>
   );
