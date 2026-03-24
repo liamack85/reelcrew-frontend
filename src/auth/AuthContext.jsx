@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const API = import.meta.env.VITE_API;
 
@@ -12,6 +7,10 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const openAuthModal = () => setModalOpen(true);
+  const closeAuthModal = () => setModalOpen(false);
 
   useEffect(() => {
     if (token) sessionStorage.setItem("token", token);
@@ -60,17 +59,21 @@ export function AuthProvider({ children }) {
     setUser(result);
   };
 
-  const value = { token, user, register, login, logout };
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    token,
+    user,
+    register,
+    login,
+    logout,
+    modalOpen,
+    openAuthModal,
+    closeAuthModal,
+  };
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context)
-    throw Error("useAuth must be used within an AuthProvider");
+  if (!context) throw Error("useAuth must be used within an AuthProvider");
   return context;
 }

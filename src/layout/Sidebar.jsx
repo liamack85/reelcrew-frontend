@@ -2,8 +2,8 @@ import { NavLink } from "react-router";
 import { useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 
-import AuthPanel from "../auth/AuthPanel";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -29,7 +29,7 @@ const navItems = [
 ];
 
 export default function Sidebar() {
-  const { user, logout } = useAuth();
+  const { user, logout, openAuthModal } = useAuth();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -56,17 +56,30 @@ export default function Sidebar() {
           <List>
             {navItems.map(({ text, icon: Icon, path }) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton component={NavLink} to={path}>
-                  <ListItemIcon>
-                    <Icon />
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
+                {text === "Profile" && !user ? (
+                  <ListItemButton onClick={openAuthModal}>
+                    <ListItemIcon>
+                      <Icon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                ) : (
+                  <ListItemButton component={NavLink} to={path}>
+                    <ListItemIcon>
+                      <Icon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                )}
               </ListItem>
             ))}
           </List>
         </Box>
-        {user ? <UserAvatar /> : <AuthPanel />}
+        {user ? (
+          <UserAvatar />
+        ) : (
+          <Button onClick={openAuthModal}>Log In / Register</Button>
+        )}
       </Drawer>
     </Box>
   );

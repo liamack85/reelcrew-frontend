@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useAuth } from "./AuthContext";
 
 export default function AuthPanel() {
-  const { login, register } = useAuth();
+  const { login, register, closeAuthModal } = useAuth();
   const [mode, setMode] = useState("login");
   const [error, setError] = useState(null);
 
@@ -24,6 +24,7 @@ export default function AuthPanel() {
         const email = formData.get("email");
         await register({ username, password, display_name, email });
       }
+      closeAuthModal();
     } catch (e) {
       setError(e.message);
     }
