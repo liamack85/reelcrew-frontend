@@ -22,7 +22,7 @@ export async function getGroupById(id) {
 
 export async function getGroupByUserId(userId) {
   try {
-    const response = await fetch(API+"/groups"+userId);
+    const response = await fetch(API+"/watch-groups/"+userId);
     const result = await response.json();
     return result;
   } catch (e) {
@@ -30,22 +30,22 @@ export async function getGroupByUserId(userId) {
   }
 }
 
-export async function createGroup(token, name, creatorId) {
-  const response = await fetch(API + "/groups", {
+export async function createGroup(token, name, creator_id) {
+  const response = await fetch(API + "/watch-groups", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify({ name, creatorId }),
+    body: JSON.stringify({ name, creator_id }),
   });
   const result = await response.json();
-  if (!response.ok) throw Error(result.message);
+  if (!response.ok) throw Error(result.message || "Request failed");
   return result;
 }
 
 export async function joinGroup(token, id) {
-  const response = await fetch(API + "/groups", {
+  const response = await fetch(API + "/watch-groups", {
     method: "UPDATE",
     headers: {
       "Content-Type": "application/json",
