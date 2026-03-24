@@ -9,10 +9,11 @@ import { useState } from "react";
 import { useAuth } from "./AuthContext";
 
 export default function AuthPanel() {
-  const { login, register } = useAuth();
+  const { login, register, closeAuthModal } = useAuth();
   const [mode, setMode] = useState("login");
   const [error, setError] = useState(null);
 
+  // Handles both login and register - mode state determines which auth call to make
   const onSubmit = async (formData) => {
     const username = formData.get("username");
     const password = formData.get("password");
@@ -20,10 +21,13 @@ export default function AuthPanel() {
       if (mode === "login") {
         await login({ username, password });
       } else {
+        // Register requires additional fields
         const display_name = formData.get("display_name");
         const email = formData.get("email");
         await register({ username, password, display_name, email });
       }
+      // Close modal on success - error case falls through to catch without closing
+      closeAuthModal();
     } catch (e) {
       setError(e.message);
     }

@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const API = import.meta.env.VITE_API;
 
@@ -13,10 +8,17 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
+  // Auth modal state lives here so any component can open it without prop drilling
+  const [modalOpen, setModalOpen] = useState(false);
+  const openAuthModal = () => setModalOpen(true);
+  const closeAuthModal = () => setModalOpen(false);
+
+  // Persists token to sessionStorage when it changes
   useEffect(() => {
     if (token) sessionStorage.setItem("token", token);
   }, [token]);
 
+  // Rehydrates user from an existing token on page load
   useEffect(() => {
     if (token) fetchMe(token);
   }, [token]);
@@ -51,6 +53,7 @@ export function AuthProvider({ children }) {
     sessionStorage.removeItem("token");
   };
 
+  // Fetches the full user object after auth - called on login, register, and token rehydration
   const fetchMe = async (token) => {
     const response = await fetch(API + "/users/me", {
       headers: { Authorization: `Bearer ${token}` },
@@ -60,17 +63,21 @@ export function AuthProvider({ children }) {
     setUser(result);
   };
 
-  const value = { token, user, register, login, logout };
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    token,
+    user,
+    register,
+    login,
+    logout,
+    modalOpen,
+    openAuthModal,
+    closeAuthModal,
+  };
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context)
-    throw Error("useAuth must be used within an AuthProvider");
+  if (!context) throw Error("useAuth must be used within an AuthProvider");
   return context;
 }

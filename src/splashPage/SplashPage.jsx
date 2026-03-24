@@ -4,8 +4,11 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import TopBar from "../layout/TopBar";
 import Typography from "@mui/material/Typography";
+import { useAuth } from "../auth/AuthContext";
 
 export default function SplashPage() {
+  const { user, openAuthModal } = useAuth();
+
   return (
     <Box component="main" sx={{ display: "flex", flexDirection: "column" }}>
       <TopBar />
@@ -16,7 +19,10 @@ export default function SplashPage() {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. A, aspernatur!
       </Typography>
       <Stack direction="row" spacing={2}>
-        <Button variant="contained">Start Watch Group</Button>
+        {/* Opens auth modal when logged out — navigate to group creation when route is ready */}
+        <Button variant="contained" onClick={!user ? openAuthModal : undefined}>
+          Start Watch Group
+        </Button>
         <Button variant="outlined">Browse Films</Button>
       </Stack>
       <Stack direction="row" spacing={2}>
