@@ -9,6 +9,7 @@ import GroupsPage from "./groups/GroupsPage";
 import WatchPage from "./watches/WatchPage";
 import FilmDetail from "./films/FilmDetail";
 import WatchForm from "./watches/WatchPageForm";
+import GroupDetails from "./groups/GroupDetails";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<SplashPage />} />
         <Route path="/groups" element={<GroupsPage />} />
+        <Route path="/groups/:id" element={<GroupDetails />} />
         <Route path="/films" element={<FilmsPage />} />
         <Route path="/watch-group/:id" element={<WatchPage />} />
         <Route path="/watch-group/:id/assign" element={<WatchForm />} />
