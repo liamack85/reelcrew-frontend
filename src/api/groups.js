@@ -77,3 +77,14 @@ export async function leaveGroup(token, groupId) {
     throw Error(result.message);
   }
 }
+
+export async function getMyGroups(token) {
+  const response = await fetch(API + "/watch-groups/mine", {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  const result = await response.json();
+  if (!response.ok) throw Error(result.message);
+  return result;
+}
