@@ -2,16 +2,17 @@ import { NavLink } from "react-router";
 import { useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 
-import UserAvatar from "./Avatar";
+import AuthPanel from "../auth/AuthPanel";
+import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import TopBar from "./TopBar";
+import UserAvatar from "./Avatar";
 
 import HomeIcon from "@mui/icons-material/Home";
 import TheatersIcon from "@mui/icons-material/Theaters";
@@ -23,7 +24,7 @@ const drawerWidth = 200;
 const navItems = [
   { text: "Home", icon: HomeIcon, path: "/" },
   { text: "Films", icon: TheatersIcon, path: "/films" },
-  { text: "Groups", icon: GroupsIcon, path: "/watch-groups" },
+  { text: "Groups", icon: GroupsIcon, path: "/groups" },
   { text: "Profile", icon: AccountBoxIcon, path: "/users/me" },
 ];
 
@@ -65,7 +66,7 @@ export default function Sidebar() {
             ))}
           </List>
         </Box>
-        <UserAvatar />
+        {user ? <UserAvatar /> : <AuthPanel />}
       </Drawer>
     </Box>
   );
