@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { getUserWatched, getUserGroups } from "../api/users";
+import RecentlyWatched from "./RecentlyWatched";
 
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -30,6 +31,7 @@ export default function ProfilePage() {
       <ProfileHeader />
       <Divider />
       <StatCards filmsLogged={watched.length} groupsJoined={groups.length} />
+      <RecentlyWatched films={watched} />
     </Box>
   );
 }
