@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import { useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
+import { drawerWidth } from "./constants";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -18,8 +19,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import TheatersIcon from "@mui/icons-material/Theaters";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-
-const drawerWidth = 200;
 
 const navItems = [
   { text: "Home", icon: HomeIcon, path: "/" },
