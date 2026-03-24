@@ -19,6 +19,7 @@ export default function SplashPage() {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. A, aspernatur!
       </Typography>
       <Stack direction="row" spacing={2}>
+        {/* Opens auth modal when logged out — navigate to group creation when route is ready */}
         <Button variant="contained" onClick={!user ? openAuthModal : undefined}>
           Start Watch Group
         </Button>

@@ -8,14 +8,17 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
+  // Auth modal state lives here so any component can open it without prop drilling
   const [modalOpen, setModalOpen] = useState(false);
   const openAuthModal = () => setModalOpen(true);
   const closeAuthModal = () => setModalOpen(false);
 
+  // Persists token to sessionStorage when it changes
   useEffect(() => {
     if (token) sessionStorage.setItem("token", token);
   }, [token]);
 
+  // Rehydrates user from an existing token on page load
   useEffect(() => {
     if (token) fetchMe(token);
   }, [token]);
@@ -50,6 +53,7 @@ export function AuthProvider({ children }) {
     sessionStorage.removeItem("token");
   };
 
+  // Fetches the full user object after auth - called on login, register, and token rehydration
   const fetchMe = async (token) => {
     const response = await fetch(API + "/users/me", {
       headers: { Authorization: `Bearer ${token}` },
