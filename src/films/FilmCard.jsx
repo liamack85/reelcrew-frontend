@@ -9,9 +9,13 @@ import Chip from "@mui/material/Chip";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 
+/* A reusable React component that displays film information.
+An authenticated user can add a film to their watchlist */
 export default function FilmCard({ film, token }) {
   const [added, setAdded] = useState(false);
 
+  /* Calls API with token and film id. Updates UI on
+  success, logs error on failure. */
   const handleAddToWatchlist = async () => {
     try {
       await addToWatchlist(token, film.id);

@@ -1,5 +1,7 @@
 const API = import.meta.env.VITE_API;
 
+/* Fetches a list of films that can be filtered by
+a search query that is safe for URL. */
 export async function getFilms(query = "") {
   try {
     const url = query
@@ -14,6 +16,7 @@ export async function getFilms(query = "") {
   }
 }
 
+/* Fetches detailed film information for a single film by id */
 export async function getFilmById(id) {
   try {
     const response = await fetch(API + "/films/" + id);
@@ -25,6 +28,7 @@ export async function getFilmById(id) {
   }
 }
 
+/* Adds a film to an authenticated user's watchlist. */
 export async function addToWatchlist(token, filmId) {
   const response = await fetch(API + "/user-films", {
     method: "POST",
@@ -39,6 +43,7 @@ export async function addToWatchlist(token, filmId) {
   return result;
 }
 
+/* Removes a film from an authenticated user's watchlist. */
 export async function removeFromWatchlist(token, userFilmId) {
   const response = await fetch(API + "/user-films/" + userFilmId, {
     method: "DELETE",
