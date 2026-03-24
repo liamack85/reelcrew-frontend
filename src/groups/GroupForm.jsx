@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 import { createGroup } from "#src/api/groups";
+import { useAuth } from "../auth/AuthContext.jsx";
 
-export default function groupForm({ token, creatorId }) {
+export default function GroupForm({ creatorId }) {
+  const {token} = useAuth();
   const [groupName, setGroupName] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -31,9 +33,10 @@ export default function groupForm({ token, creatorId }) {
 
   return (
     <section>
-      <form action={handleForm}>
+      <form onSubmit={handleForm}>
         <label>Group Name</label>
-        <input required type="text" id="groupName" value={groupName} onChange={(e) => setGroupName(e.target.value)} />
+        <input required type="text" id="groupName" value={groupName} 
+        onChange={(e) => setGroupName(e.target.value)} />
         <button type="submit">Create Group</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {success && <p style={{ color: 'green' }}>{success}</p>}

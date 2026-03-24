@@ -18,6 +18,7 @@ export default function App() {
         <Route path="/groups" element={<GroupsPage />} />
         <Route path="/films" element={<FilmsPage />} />
         <Route path="/watch-group/:id" element={<WatchPage />} />
+        <Route path="/watch-group/:id/assign" element={<WatchForm />} />
         <Route path="/films/:id" element={<FilmDetail />} />
         <Route path="/users/me" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />

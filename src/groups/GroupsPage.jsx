@@ -1,6 +1,7 @@
 import { getGroups } from "#src/api/groups"
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import GroupForm from "./groupForm";
 
 export default function GroupsPage() {
   const [groups, setGroups] = useState([]);
@@ -16,6 +17,7 @@ export default function GroupsPage() {
   return (
     <section id="GroupsPage">
       <h1>All Groups</h1>
+      <GroupForm />
       <ul>
         {groups.map((group)=>(
           <li key={group.id}>
