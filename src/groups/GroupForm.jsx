@@ -1,16 +1,13 @@
 import { useState } from "react";
-
 import { createGroup } from "#src/api/groups";
 import { useAuth } from "../auth/AuthContext.jsx";
 
-export default function GroupForm({ creatorId }) {
-  const {token} = useAuth();
-  const [groupName, setGroupName] = useState('');
+export default function GroupForm({onCreated}) {
+  const {token, user} = useAuth();
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const handleForm = async (e) => {
-    e.preventDefault();
+  const handleForm = async (formData) => {
     setError('');
     setSuccess('');
 
@@ -20,23 +17,24 @@ export default function GroupForm({ creatorId }) {
       return;
     }
 
+    const groupName = formData.get("groupName");
+
     try {
-      const formData = await createGroup(token, groupName, creatorId);
+      await createGroup(token, groupName, user.id);
       setSuccess('Group created.');
-      console.log(formData);
+      onCreated(); // refresh list on parent
 
     } catch (err) {
-      setError(error.message || 'CANNOT CREATE GROUP');
+      setError(err.message || 'CANNOT CREATE GROUP');
       console.error(err);
     }
   }
 
   return (
     <section>
-      <form onSubmit={handleForm}>
+      <form action={handleForm}>
         <label>Group Name</label>
-        <input required type="text" id="groupName" value={groupName} 
-        onChange={(e) => setGroupName(e.target.value)} />
+        <input required type="text" name="groupName" />
         <button type="submit">Create Group</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {success && <p style={{ color: 'green' }}>{success}</p>}

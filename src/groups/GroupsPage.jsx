@@ -6,18 +6,19 @@ import GroupForm from "./groupForm";
 export default function GroupsPage() {
   const [groups, setGroups] = useState([]);
 
+  const syncGroups = async () => {
+    const groups = await getGroups();
+    setGroups(groups)
+  }
+  
   useEffect(()=>{
-    const syncGroups = async () => {
-      const groups = await getGroups();
-      setGroups(groups)
-    }
     syncGroups();
   }, []);
 
   return (
     <section id="GroupsPage">
       <h1>All Groups</h1>
-      <GroupForm />
+      <GroupForm onCreated={syncGroups}/>
       <ul>
         {groups.map((group)=>(
           <li key={group.id}>
