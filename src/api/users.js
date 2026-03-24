@@ -21,3 +21,16 @@ export async function getUserGroups(id) {
     return [];
   }
 }
+
+export async function getAllUserFilms(token) {
+  try {
+    const response = await fetch(API + "/user-films", {
+      headers: { Authorization: "Bearer " + token },
+    });
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}

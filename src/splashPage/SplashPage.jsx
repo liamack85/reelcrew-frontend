@@ -5,9 +5,11 @@ import Toolbar from "@mui/material/Toolbar";
 import TopBar from "../layout/TopBar";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router";
 
 export default function SplashPage() {
   const { user, openAuthModal } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <Box component="main" sx={{ display: "flex", flexDirection: "column" }}>
@@ -20,10 +22,14 @@ export default function SplashPage() {
       </Typography>
       <Stack direction="row" spacing={2}>
         {/* Opens auth modal when logged out — navigate to group creation when route is ready */}
-        <Button variant="contained" onClick={!user ? openAuthModal : undefined}>
+        <Button
+          variant="contained"
+          onClick={!user ? openAuthModal : () => navigate("/groups")}>
           Start Watch Group
         </Button>
-        <Button variant="outlined">Browse Films</Button>
+        <Button variant="outlined" onClick={() => navigate("/films")}>
+          Browse Films
+        </Button>
       </Stack>
       <Stack direction="row" spacing={2}>
         <Typography>Stat1</Typography>
