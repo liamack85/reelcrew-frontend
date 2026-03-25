@@ -2,6 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
+/** A single outlined stat card displaying a numeric value and a descriptive label. */
 export default function StatCard({ value, label }) {
   return (
     <Card variant="outlined" sx={{ display: "flex", flexDirection: "column" }}>

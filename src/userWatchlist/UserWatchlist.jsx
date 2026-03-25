@@ -5,6 +5,10 @@ import Box from "@mui/material/Box";
 import FilmPoster from "../profile/ProfileFilmCard";
 import Toolbar from "@mui/material/Toolbar";
 
+/**
+ *  Displays all films in the logged-in user's watchlist and watch history.
+ *  Requires an auth token — protected endpoint.
+ */
 export default function UserWatchlist() {
   const { token } = useAuth();
   const [films, setFilms] = useState([]);

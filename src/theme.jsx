@@ -4,7 +4,7 @@ import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 
 const ThemeModeContext = createContext({ toggleMode: () => {} });
 
-// Design tokens RS
+// Design tokens
 const colors = {
   amber: "#EF9F27",
   teal: "#1D9E75",
@@ -15,7 +15,7 @@ const colors = {
   warm_paper: "#FFFFFF",
 };
 
-// Build palette based on mode RS
+// Build palette based on mode
 const getDesignTokens = (mode) => ({
   palette: {
     mode,
@@ -49,7 +49,7 @@ export function ThemeProvider({ children }) {
   const toggleMode = () => {
     setMode((prev) => {
       const next = prev === "light" ? "dark" : "light";
-      localStorage.setItem("theme-mode", next); // missing
+      localStorage.setItem("theme-mode", next);
       return next;
     });
   };

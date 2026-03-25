@@ -2,6 +2,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
+/** Fixed app bar displayed at the top of every page. Uses elevated zIndex to render above the Sidebar drawer. */
 export default function TopBar() {
   return (
     // zIndex must exceed the Drawer's to prevent the AppBar from rendering behind the sidebar
