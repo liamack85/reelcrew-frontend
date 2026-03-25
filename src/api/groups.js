@@ -98,3 +98,10 @@ export async function getMyGroups(token) {
   if (!response.ok) throw Error(result.message);
   return result;
 }
+
+export async function getWatchesByGroup(groupId) {
+  const response = await fetch(API + "/group-watches/group/" + groupId);
+  const result = await response.json();
+  if (!response.ok) throw Error(result.message);
+  return result;
+}
