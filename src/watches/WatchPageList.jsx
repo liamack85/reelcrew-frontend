@@ -1,30 +1,29 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react=router";
+import { useParams, Link } from "react-router";
 import { getWatchesByGroup } from "../api/groups";
 
 /**
  * Displays a list of all watch events for a specific group showing the film title, director, deadline, and status for each.
  */
 
-export default function WatchPageList () {
-
+export default function WatchPageList() {
   const { id } = useParams();
   const [watches, setWatches] = useState([]);
   const [error, setError] = useState(null);
 
-  useEffect (() => {
+  useEffect(() => {
     async function fetchWatches() {
       try {
         const data = await getWatchesByGroup(id);
         setWatches(data);
       } catch (e) {
-        setError (e.message);
+        setError(e.message);
       }
     }
     fetchWatches();
   }, [id]);
 
-  if (error ) return <p className="error-message">{error}</p>;
+  if (error) return <p className="error-message">{error}</p>;
 
   return (
     <section id="watch-page-list">
@@ -37,7 +36,9 @@ export default function WatchPageList () {
             <li key={watch.id}>
               <Link to={"/watch-group/" + watch.group_id}>
                 <h2>{watch.title}</h2>
-                <p>{watch.year} · {watch.director}</p>
+                <p>
+                  {watch.year} · {watch.director}
+                </p>
                 <p>Deadline: {watch.deadline}</p>
                 <p>Status: {watch.status}</p>
               </Link>
