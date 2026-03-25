@@ -5,6 +5,10 @@ import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 
+/**
+ *  A vertical film card showing the poster, title, and watch status.
+ *  Falls back to a colored box if no poster is available.
+ */
 export default function FilmPoster({ film }) {
   return (
     <Card sx={{ display: "flex", flexDirection: "column", padding: 1 }}>

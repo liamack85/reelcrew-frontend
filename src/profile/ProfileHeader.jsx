@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { getInitials } from "../watches/MemberList";
 import { useAuth } from "../auth/AuthContext";
 
+/** Shows the user's avatar, display name, and role chip at the top of the profile page. */
 export default function ProfileHeader() {
   const { user } = useAuth();
   if (!user) return <p>Loading...</p>;

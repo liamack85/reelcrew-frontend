@@ -26,6 +26,10 @@ const navItems = [
   { text: "Profile", icon: AccountBoxIcon, path: "/users/me" },
 ];
 
+/**
+ * Permanent left-side navigation drawer. Shows nav links, opens the auth modal
+ * for protected routes when logged out, and renders the user avatar when logged in.
+ */
 export default function Sidebar() {
   const { user, openAuthModal } = useAuth();
 

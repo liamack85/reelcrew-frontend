@@ -1,6 +1,7 @@
 import Stack from "@mui/material/Stack";
 import StatCard from "./StatCard";
 
+/** Renders a row of stat cards for films logged, groups joined, and on-time watch rate. */
 export default function StatCards({ filmsLogged, groupsJoined }) {
   return (
     <Stack

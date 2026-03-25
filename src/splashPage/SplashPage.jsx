@@ -7,6 +7,10 @@ import Typography from "@mui/material/Typography";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router";
 
+/**
+ *  Public landing page. Lazy-gates the "Start Watch Group" button —
+ *  opens auth modal if logged out, navigates to /groups if logged in.
+ */
 export default function SplashPage() {
   const { user, openAuthModal } = useAuth();
   const navigate = useNavigate();

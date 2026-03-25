@@ -8,6 +8,7 @@ import { useAuth } from "../auth/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+/** Displays the logged-in user's avatar with a dropdown menu for navigation and logout. */
 export default function UserAvatar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
