@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createGroup } from "#src/api/groups";
+import { createGroup } from "../api/groups";
 import { useAuth } from "../auth/AuthContext.jsx";
 
 /**
@@ -8,22 +8,22 @@ import { useAuth } from "../auth/AuthContext.jsx";
  * @param {Function} props.onCreated - Callback invoked after successful creation to refresh parent data.
  * @returns {JSX.Element}
  */
-export default function GroupForm({onCreated}) {
-  const {token, user, openAuthModal} = useAuth();
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+export default function GroupForm({ onCreated }) {
+  const { token, user, openAuthModal } = useAuth();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-    /**
+  /**
    * Handle form submission: validates auth, calls API to create a group, and triggers onCreated.
    * @param {FormData} formData - FormData from the submitted form; expects a "groupName" field.
    */
   const handleForm = async (formData) => {
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     // Check if the token is available
     if (!token) {
-      setError('Must be logged in to create a group.');
+      setError("Must be logged in to create a group.");
       return;
     }
 
@@ -31,14 +31,13 @@ export default function GroupForm({onCreated}) {
 
     try {
       await createGroup(token, groupName, user.id);
-      setSuccess('Group created.');
+      setSuccess("Group created.");
       onCreated(); // refresh list on parent
-
     } catch (err) {
-      setError(err.message || 'CANNOT CREATE GROUP');
+      setError(err.message || "CANNOT CREATE GROUP");
       console.error(err);
     }
-  }
+  };
 
   return (
     <section>
@@ -46,9 +45,9 @@ export default function GroupForm({onCreated}) {
         <label>Group Name</label>
         <input required type="text" name="groupName" />
         <button type="submit">Create Group</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {success && <p style={{ color: "green" }}>{success}</p>}
       </form>
     </section>
-  )
+  );
 }
