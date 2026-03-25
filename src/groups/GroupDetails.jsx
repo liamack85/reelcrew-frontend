@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
+import WatchPageList from "../watches/WatchPageList";
 
 /**
  * Displays details for a single group, including its members.
@@ -58,6 +59,7 @@ export default function GroupDetails() {
           </li>
         ))}
       </ul>
+      <WatchPageList />
     </Box>
   );
 }

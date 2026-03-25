@@ -27,7 +27,7 @@ export default function WatchPageList() {
 
   return (
     <section id="watch-page-list">
-      <h1>Watch Events</h1>
+      <h2>Watch Events</h2>
       {watches.length === 0 ? (
         <p>No watches yet for this group</p>
       ) : (
