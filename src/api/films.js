@@ -54,3 +54,18 @@ export async function removeFromWatchlist(token, userFilmId) {
     throw Error(result);
   }
 }
+
+/* Updates the status (or rating) of a film in the user's list. */
+export async function updateFilmStatus(token, userFilmId, status) {
+  const response = await fetch(API + "/user-films/" + userFilmId, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify({ status }),
+  });
+  const result = await response.json();
+  if (!response.ok) throw Error(result.message);
+  return result;
+}
