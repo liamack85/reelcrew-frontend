@@ -11,6 +11,7 @@ import FilmDetail from "./films/FilmDetail";
 import WatchForm from "./watches/WatchPageForm";
 import GroupDetails from "./groups/GroupDetails";
 import WatchPageList from "./watches/WatchPageList";
+import UserWatchlist from "./userWatchlist/UserWatchlist";
 
 export default function App() {
   return (
