@@ -2,7 +2,7 @@
  * Displays a list of group members with their role, watch status, and avatar initials.
  * 
  * @param {Object} props
- * @param {Array} props.members - Array of member objects from the group watch progress data
+ * @param {Array} props.members Array of member objects from the group watch progress data
  */
 
 export default function MemberList({ members }) {
@@ -46,8 +46,8 @@ export default function MemberList({ members }) {
 /**
  * Extracts the first letter of each word in a name to create avatar initials.
  * 
- * @param {string} name - A user's display name
- * @returns {string} Uppercase initials (e.g. "Big Terry" → "BT")
+ * @param {string} name a user's display name
+ * @returns {string} uppercase initials (e.g. "Big Terry" → "BT")
  */
 
 export function getInitials(name) {
