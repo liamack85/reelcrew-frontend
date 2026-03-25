@@ -32,18 +32,21 @@ export default function GroupDetails() {
 
   if (!group) return <p>Loading...</p>;
 
-  // handler for user action JOIN
+/**
+ * Adds the user to the group, then refreshes the member list.
+ */
   const joinCurrentGroup = async () => {
-    // add a check if already a member
-
     try {
-      await joinGroup(token, id, user.id, "member"); // perform join      
-      await syncGroupDetail(); // refresh group and members
+      await joinGroup(token, id, user.id, "member");
+      await syncGroupDetail();
     } catch (err) {
       console.error('Join failed: ', err);
     }
   };
   
+/**
+ * Removes the user from the group, then refreshes the member list.
+ */
   const leaveCurrentGroup = async() => {
     try {
       await leaveGroup(token, id, user.id);
@@ -53,6 +56,12 @@ export default function GroupDetails() {
     }
   }
 
+/**
+ * Whether the current authenticated user is a member of the group.
+ *
+ * @type {boolean}
+ */
+  const isMember = groupMembers.some(m => m.user_id === user.id);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
@@ -61,8 +70,11 @@ export default function GroupDetails() {
       <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
       <Typography variant="h2">
         {group.name} 
+        {
+        isMember ?
+        <button onClick={leaveCurrentGroup}>Leave Group</button> :
         <button onClick={joinCurrentGroup}>Join</button>
-        <button onClick={leaveCurrentGroup}>Leave Group</button>
+        }
       </Typography>
       <p>
         Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
