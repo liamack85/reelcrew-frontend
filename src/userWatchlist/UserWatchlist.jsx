@@ -3,7 +3,6 @@ import { useAuth } from "../auth/AuthContext";
 import { getAllUserFilms } from "../api/users";
 import Box from "@mui/material/Box";
 import FilmPoster from "../profile/ProfileFilmCard";
-import Toolbar from "@mui/material/Toolbar";
 
 /**
  *  Displays all films in the logged-in user's watchlist and watch history.
@@ -26,8 +25,6 @@ export default function UserWatchlist() {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Toolbar />
-
       <Box
         sx={{
           display: "grid",

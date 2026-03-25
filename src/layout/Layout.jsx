@@ -3,6 +3,7 @@ import { drawerWidth } from "./constants";
 import AuthModal from "../auth/AuthModal";
 import Box from "@mui/material/Box";
 import Sidebar from "./Sidebar";
+import Toolbar from "@mui/material/Toolbar";
 
 /** Root page layout — renders the Sidebar, the auth modal, and the current route's page via Outlet. */
 export default function Layout() {
@@ -11,6 +12,7 @@ export default function Layout() {
       <Sidebar />
       <AuthModal />
       <main>
+        <Toolbar />
         <Outlet />
       </main>
     </Box>
