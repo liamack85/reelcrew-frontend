@@ -1,4 +1,4 @@
-import { getGroupById, getMembers, joinGroup } from "../api/groups";
+import { getGroupById, getMembers, joinGroup, leaveGroup } from "../api/groups";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { useAuth } from "../auth/AuthContext";
@@ -16,7 +16,6 @@ export default function GroupDetails() {
   const { id } = useParams();
   const [group, setGroup] = useState(null);
   const [groupMembers, setGroupMembers] = useState(null);
-  const [joining, setJoining] = useState(false);
 
   /**
    * Fetch group details and members from the API and update component state.
@@ -35,15 +34,24 @@ export default function GroupDetails() {
 
   // handler for user action JOIN
   const joinCurrentGroup = async () => {
+    // add a check if already a member
+
     try {
       await joinGroup(token, id, user.id, "member"); // perform join      
-      setJoining(true);
       await syncGroupDetail(); // refresh group and members
     } catch (err) {
-      console.error('Join failed:', err);
+      console.error('Join failed: ', err);
     }
-    setJoining(false);
   };
+  
+  const leaveCurrentGroup = async() => {
+    try {
+      await leaveGroup(token, id, user.id);
+      await syncGroupDetail();
+    } catch (err) {
+      console.error('Leaving failed: ', err)
+    }
+  }
 
 
   return (
@@ -54,7 +62,7 @@ export default function GroupDetails() {
       <Typography variant="h2">
         {group.name} 
         <button onClick={joinCurrentGroup}>Join</button>
-        <button>Leave Group</button>
+        <button onClick={leaveCurrentGroup}>Leave Group</button>
       </Typography>
       <p>
         Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
