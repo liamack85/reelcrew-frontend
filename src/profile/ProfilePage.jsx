@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { getUserWatched, getUserGroups } from "../api/users";
 import RecentlyWatched from "./RecentlyWatched";
-
+import ProfileGroupCard from "./ProfileGroupCard";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Toolbar from "@mui/material/Toolbar";
 import ProfileHeader from "./ProfileHeader";
 import StatCards from "./StatCards";
 
@@ -29,11 +28,19 @@ export default function ProfilePage() {
 
   return (
     <Box>
-      <Toolbar />
       <ProfileHeader />
       <Divider />
       <StatCards filmsLogged={watched.length} groupsJoined={groups.length} />
-      <RecentlyWatched films={watched} />
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr",
+          gap: 2,
+          margin: 1,
+        }}>
+        <RecentlyWatched films={watched} />
+        <ProfileGroupCard groups={groups} />
+      </Box>
     </Box>
   );
 }
