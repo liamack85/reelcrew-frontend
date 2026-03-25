@@ -1,5 +1,4 @@
 import { NavLink } from "react-router";
-import { useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { drawerWidth } from "./constants";
 
@@ -27,14 +26,12 @@ const navItems = [
   { text: "Profile", icon: AccountBoxIcon, path: "/users/me" },
 ];
 
+/**
+ * Permanent left-side navigation drawer. Shows nav links, opens the auth modal
+ * for protected routes when logged out, and renders the user avatar when logged in.
+ */
 export default function Sidebar() {
-  const { user, logout, openAuthModal } = useAuth();
-  const navigate = useNavigate();
-
-  function handleLogout() {
-    logout();
-    navigate("/");
-  }
+  const { user, openAuthModal } = useAuth();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -55,6 +52,7 @@ export default function Sidebar() {
           <List>
             {navItems.map(({ text, icon: Icon, path }) => (
               <ListItem key={text} disablePadding>
+                {/* Profile is the only navItem that requires auth - opens modal instead of navigating if logged out */}
                 {text === "Profile" && !user ? (
                   <ListItemButton onClick={openAuthModal}>
                     <ListItemIcon>

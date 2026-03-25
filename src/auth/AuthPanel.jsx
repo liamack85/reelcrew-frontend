@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
 
+/** Combined login/register form rendered inside the auth modal. Toggles between modes via a ToggleButtonGroup. */
 export default function AuthPanel() {
   const { login, register, closeAuthModal } = useAuth();
   const [mode, setMode] = useState("login");

@@ -7,6 +7,10 @@ import Typography from "@mui/material/Typography";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router";
 
+/**
+ *  Public landing page. Lazy-gates the "Start Watch Group" button —
+ *  opens auth modal if logged out, navigates to /groups if logged in.
+ */
 export default function SplashPage() {
   const { user, openAuthModal } = useAuth();
   const navigate = useNavigate();
@@ -21,7 +25,7 @@ export default function SplashPage() {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. A, aspernatur!
       </Typography>
       <Stack direction="row" spacing={2}>
-        {/* Opens auth modal when logged out — navigate to group creation when route is ready */}
+        {/* Lazy gate — opens auth modal if logged out, navigates to groups if logged in */}
         <Button
           variant="contained"
           onClick={!user ? openAuthModal : () => navigate("/groups")}>
@@ -32,6 +36,7 @@ export default function SplashPage() {
         </Button>
       </Stack>
       <Stack direction="row" spacing={2}>
+        {/* TODO: replace with real app stats from the API */}
         <Typography>Stat1</Typography>
         <Typography>Stat2</Typography>
         <Typography>Stat3</Typography>

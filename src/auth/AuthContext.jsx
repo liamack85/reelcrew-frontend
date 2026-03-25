@@ -4,6 +4,22 @@ const API = import.meta.env.VITE_API;
 
 const AuthContext = createContext();
 
+/**
+ *
+ * @typedef {Object} AuthContext
+ * @property {object|null} user
+ * @property {string|null} token
+ * @property {(credentials: object) => Promise<void>} login
+ * @property {(credentials: object) => Promise<void>} register
+ * @property {() => void} logout
+ * @property {boolean} modalOpen
+ * @property {() => void} openAuthModal
+ * @property {() => void} closeAuthModal
+ *
+ * @returns {AuthContext}
+ *
+ * Provides authentication state and modal control to the entire app.
+ */
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
@@ -76,6 +92,10 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+/**
+ * Hook to access authentication state and actions from anywhere in the app.
+ * @returns {AuthContext}
+ */
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) throw Error("useAuth must be used within an AuthProvider");

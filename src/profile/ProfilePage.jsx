@@ -9,11 +9,13 @@ import Toolbar from "@mui/material/Toolbar";
 import ProfileHeader from "./ProfileHeader";
 import StatCards from "./StatCards";
 
+/** Displays the logged-in user's profile — stats, header info, and recently watched films. */
 export default function ProfilePage() {
   const { user } = useAuth();
   const [watched, setWatched] = useState([]);
   const [groups, setGroups] = useState([]);
 
+  // Fetch both stats on mount — skips if user isn't loaded yet (auth rehydration)
   useEffect(() => {
     if (!user) return;
     async function fetchStats() {

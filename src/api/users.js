@@ -1,5 +1,6 @@
 const API = import.meta.env.VITE_API;
 
+// Public endpoints — server derives data from userId in the URL
 export async function getUserWatched(id) {
   try {
     const response = await fetch(API + "/users/" + id + "/watched");
@@ -22,6 +23,7 @@ export async function getUserGroups(id) {
   }
 }
 
+// Protected endpoint — server derives user from JWT, no id needed in URL
 export async function getAllUserFilms(token) {
   try {
     const response = await fetch(API + "/user-films", {
