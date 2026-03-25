@@ -3,9 +3,16 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import GroupForm from "./groupForm";
 
+/**
+ * displays all groups and a form to create new ones
+ * @returns {JSX.Element}
+ */
 export default function GroupsPage() {
   const [groups, setGroups] = useState([]);
 
+  /**
+   * Fetch groups from the API and update groups state.
+   */
   const syncGroups = async () => {
     const groups = await getGroups();
     setGroups(groups)

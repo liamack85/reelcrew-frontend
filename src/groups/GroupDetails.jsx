@@ -3,11 +3,18 @@ import { Box, Chip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router"
 
+/**
+ * Displays details for a single group, including its members.
+ * @returns {JSX.Element} 
+ */
 export default function GroupDetails() {
   const {id} = useParams();
   const [group, setGroup] = useState(null);
   const [groupMembers, setGroupMembers] = useState(null);
   
+  /**
+   * Fetch group details and members from the API and update component state.
+   */
   const syncGroupDetail = async() => {
     const group = await getGroupById(id);
     const groupMembers = await getMembers(id);

@@ -1,5 +1,8 @@
 const API = import.meta.env.VITE_API;
 
+/**
+ * Fetch all watch groups.
+ */
 export async function getGroups() {
   try {
     const response = await fetch(API+"/watch-groups");
@@ -10,6 +13,10 @@ export async function getGroups() {
   }
 }
 
+/**
+ * Fetch a single watch group by ID.
+ * @param {number} id - Group ID.
+ */
 export async function getGroupById(id) {
   try {
     const response = await fetch(API+"/watch-groups/"+id);
@@ -20,6 +27,10 @@ export async function getGroupById(id) {
   }
 }
 
+/**
+ * Fetch members for a given group.
+ * @param {number} id - Group ID.
+ */
 export async function getMembers(id) {
   try {
     const response = await fetch(API+"/watch-groups/"+id+"/members");
@@ -29,6 +40,11 @@ export async function getMembers(id) {
     console.log('CANNOT GET GROUP MEMBERS: ', e);
   }
 };
+
+/**
+ * Fetch groups for a given user ID.
+ * @param {number} userId - User ID.
+ */
 
 export async function getGroupByUserId(userId) {
   try {
@@ -40,6 +56,14 @@ export async function getGroupByUserId(userId) {
   }
 }
 
+/**
+ * Create a new watch group.
+ *
+ * @param {string} token - Bearer token for authentication.
+ * @param {string} name - Name of the new group.
+ * @param {number} creator_id - ID of the creating user.
+ * @throws {Error} When the response is not ok.
+ */
 export async function createGroup(token, name, creator_id) {
   const response = await fetch(API + "/watch-groups", {
     method: "POST",
@@ -53,6 +77,14 @@ export async function createGroup(token, name, creator_id) {
   if (!response.ok) throw Error(result.message || "Request failed");
   return result;
 }
+
+/**
+ * Request to join a group.
+ *
+ * @param {string} token - Bearer token for authentication.
+ * @param {number} id - ID of the group to join.
+ * @throws {Error} When the response is not ok.
+ */
 
 export async function joinGroup(token, id) {
   const response = await fetch(API + "/watch-groups", {
@@ -68,6 +100,13 @@ export async function joinGroup(token, id) {
   return result;
 }
 
+/**
+ * Leave a group (remove current user from group members).
+ *
+ * @param {string} token - Bearer token for authentication.
+ * @param {number} groupId - ID of the group to leave.
+ * @throws {Error} If not signed in or if the request fails.
+ */
 export async function leaveGroup(token, groupId) {
   if (!token) {
     throw Error("You are not signed in.");

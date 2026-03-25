@@ -2,11 +2,21 @@ import { useState } from "react";
 import { createGroup } from "#src/api/groups";
 import { useAuth } from "../auth/AuthContext.jsx";
 
+/**
+ * Form component to create a new group.
+ *
+ * @param {Function} props.onCreated - Callback invoked after successful creation to refresh parent data.
+ * @returns {JSX.Element}
+ */
 export default function GroupForm({onCreated}) {
   const {token, user, openAuthModal} = useAuth();
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+    /**
+   * Handle form submission: validates auth, calls API to create a group, and triggers onCreated.
+   * @param {FormData} formData - FormData from the submitted form; expects a "groupName" field.
+   */
   const handleForm = async (formData) => {
     setError('');
     setSuccess('');
