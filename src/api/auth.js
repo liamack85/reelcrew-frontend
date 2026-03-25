@@ -45,7 +45,7 @@ export async function registerUser(credentials) {
 }
 
 /**
- * Retrieves the currently logged-in user's profile
+ * Fetches the currently logged-in user's profile
  * 
  * @param {string} token the bearer token for authentication
  * @returns {Object|null} the user object, or null if not authenticated
@@ -61,6 +61,7 @@ export async function getUser(token) {
 
 /**
  * Updates a user's profile info
+ * 
  * @param {string} token the bearer token for authentication
  * @param {number} id the user's ID 
  * @param {Object} updates Object containing the fields to update 

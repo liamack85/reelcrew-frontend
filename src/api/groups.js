@@ -1,8 +1,11 @@
 const API = import.meta.env.VITE_API;
 
 /**
- * Fetch all watch groups.
+ * Fetch all watch groups
+ *
+ * @returns {Array} list of all watch groups with member counts
  */
+
 export async function getGroups() {
   try {
     const response = await fetch(API+"/watch-groups");
@@ -14,9 +17,12 @@ export async function getGroups() {
 }
 
 /**
- * Fetch a single watch group by ID.
- * @param {number} id - Group ID.
+ * Fetches a single watch group by its ID
+ *
+ * @param {number} id the watch group ID
+ * @returns {Object} the watch group data
  */
+
 export async function getGroupById(id) {
   try {
     const response = await fetch(API+"/watch-groups/"+id);
@@ -28,24 +34,11 @@ export async function getGroupById(id) {
 }
 
 /**
- * Fetch members for a given group.
- * @param {number} id - Group ID.
+ * Fetch watch groups that a specific user belongs to
+ *
+ * @param {number} userId the user's ID
+ * @returns {Array} list of watch groups for that user
  */
-export async function getMembers(id) {
-  try {
-    const response = await fetch(API+"/watch-groups/"+id+"/members");
-    const result = await response.json();
-    return result;
-  } catch (e) {
-    console.log('CANNOT GET GROUP MEMBERS: ', e);
-  }
-};
-
-/**
- * Fetch groups for a given user ID.
- * @param {number} userId - User ID.
- */
-
 export async function getGroupByUserId(userId) {
   try {
     const response = await fetch(API+"/watch-groups/"+userId);
@@ -57,13 +50,15 @@ export async function getGroupByUserId(userId) {
 }
 
 /**
- * Create a new watch group.
+ * Creates a new watch group
  *
- * @param {string} token - Bearer token for authentication.
- * @param {string} name - Name of the new group.
- * @param {number} creator_id - ID of the creating user.
- * @throws {Error} When the response is not ok.
+ * @param {string} token the bearer token for authentication
+ * @param {string} name name of the new group
+ * @param {number} creator_id ID of the user creating the group
+ * @returns {Object} the newly created watch group
+ * @throws {Error} when the request fails
  */
+
 export async function createGroup(token, name, creator_id) {
   const response = await fetch(API + "/watch-groups", {
     method: "POST",
@@ -79,11 +74,12 @@ export async function createGroup(token, name, creator_id) {
 }
 
 /**
- * Request to join a group.
+ * Adds the current user to a watch group
  *
- * @param {string} token - Bearer token for authentication.
- * @param {number} id - ID of the group to join.
- * @throws {Error} When the response is not ok.
+ * @param {string} token the bearer token for authentication
+ * @param {number} id ID of the group to join
+ * @returns {Object} the updated group membership data
+ * @throws {Error} when the request fails
  */
 
 export async function joinGroup(token, id) {
@@ -101,12 +97,13 @@ export async function joinGroup(token, id) {
 }
 
 /**
- * Leave a group (remove current user from group members).
+ * Removes the current user from a watch group
  *
- * @param {string} token - Bearer token for authentication.
- * @param {number} groupId - ID of the group to leave.
- * @throws {Error} If not signed in or if the request fails.
+ * @param {string} token the bearer token for authentication
+ * @param {number} groupId ID of the group to leave
+ * @throws {Error} if not signed in or if the request fails
  */
+
 export async function leaveGroup(token, groupId) {
   if (!token) {
     throw Error("You are not signed in.");
@@ -127,6 +124,14 @@ export async function leaveGroup(token, groupId) {
   }
 }
 
+/**
+ * Fetches all watch groups the logged-in user belongs to
+ *
+ * @param {string} token the bearer token for authentication
+ * @returns {Array} list of the user's watch groups with their role in each
+ * @throws {Error} when the request fails
+ */
+
 export async function getMyGroups(token) {
   const response = await fetch(API + "/watch-groups/mine", {
     headers: {
@@ -138,9 +143,18 @@ export async function getMyGroups(token) {
   return result;
 }
 
+/**
+ * Fetches all watch events for a specific group
+ *
+ * @param {number} groupId  the watch group ID
+ * @returns {Array} list of watch events with film details
+ * @throws {Error} when the request fails
+ */
+
 export async function getWatchesByGroup(groupId) {
   const response = await fetch(API + "/group-watches/group/" + groupId);
   const result = await response.json();
   if (!response.ok) throw Error(result.message);
   return result;
 }
+
