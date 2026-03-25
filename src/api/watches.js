@@ -8,13 +8,9 @@ const API = import.meta.env.VITE_API;
  */
 
 export async function getCurrentWatch(groupId) {
-  try {
-    const response = await fetch(API+"/groups/"+groupId+"/watches/current");
-    const result = response.json();
-    return result;
-  } catch (e) {
-    console.log("CANNOT GET CURRENT WATCH: ", e)
-  }
+  const response = await fetch(API + "/group-watches/group/" + groupId + "/current");
+  const result = await response.json();
+  return result;
 }
 
 /**
