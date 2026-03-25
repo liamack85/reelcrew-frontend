@@ -86,14 +86,14 @@ export async function createGroup(token, name, creator_id) {
  * @throws {Error} When the response is not ok.
  */
 
-export async function joinGroup(token, id) {
-  const response = await fetch(API + "/watch-groups", {
-    method: "UPDATE",
+export async function joinGroup(token, id, user_id, role) {
+  const response = await fetch(API + "/watch-groups/"+id+"/members", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify({ id }),
+    body: JSON.stringify({ id, user_id, role }),
   });
   const result = await response.json();
   if (!response.ok) throw Error(result.message);
