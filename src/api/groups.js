@@ -20,6 +20,16 @@ export async function getGroupById(id) {
   }
 }
 
+export async function getMembers(id) {
+  try {
+    const response = await fetch(API+"/watch-groups/"+id+"/members");
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.log('CANNOT GET GROUP MEMBERS: ', e);
+  }
+};
+
 export async function getGroupByUserId(userId) {
   try {
     const response = await fetch(API+"/watch-groups/"+userId);

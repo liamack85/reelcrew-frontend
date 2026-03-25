@@ -27,6 +27,7 @@ export default function App() {
         <Route path="/users/me" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/users/me/watchlist" element={<UserWatchlist />} />
       </Route>
     </Routes>
   );

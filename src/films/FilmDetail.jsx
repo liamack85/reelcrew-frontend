@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 
+/* A React component that fetches and displays detailed information
+about one single film by film id. Will also allow authenticated
+user to add film to watchlist */
 export default function FilmDetail() {
   const { token } = useAuth();
   const { id } = useParams();
