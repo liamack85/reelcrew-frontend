@@ -14,6 +14,7 @@ export default function ProfilePage() {
   const [watched, setWatched] = useState([]);
   const [groups, setGroups] = useState([]);
 
+  // Fetch both stats on mount — skips if user isn't loaded yet (auth rehydration)
   useEffect(() => {
     if (!user) return;
     async function fetchStats() {

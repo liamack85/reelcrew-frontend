@@ -1,5 +1,4 @@
 import { NavLink } from "react-router";
-import { useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { drawerWidth } from "./constants";
 
@@ -29,7 +28,6 @@ const navItems = [
 
 export default function Sidebar() {
   const { user, openAuthModal } = useAuth();
-  const navigate = useNavigate();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -50,6 +48,7 @@ export default function Sidebar() {
           <List>
             {navItems.map(({ text, icon: Icon, path }) => (
               <ListItem key={text} disablePadding>
+                {/* Profile is the only navItem that requires auth - opens modal instead of navigating if logged out */}
                 {text === "Profile" && !user ? (
                   <ListItemButton onClick={openAuthModal}>
                     <ListItemIcon>

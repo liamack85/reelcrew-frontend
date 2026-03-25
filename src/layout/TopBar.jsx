@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 
 export default function TopBar() {
   return (
+    // zIndex must exceed the Drawer's to prevent the AppBar from rendering behind the sidebar
     <AppBar
       position="fixed"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>

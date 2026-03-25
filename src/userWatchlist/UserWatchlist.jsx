@@ -9,6 +9,8 @@ export default function UserWatchlist() {
   const { token } = useAuth();
   const [films, setFilms] = useState([]);
 
+  // Guards on token rather than user — getAllUserFilms is a protected endpoint
+  // that requires the auth header, not just the user object
   useEffect(() => {
     if (!token) return;
     async function fetchFilms() {

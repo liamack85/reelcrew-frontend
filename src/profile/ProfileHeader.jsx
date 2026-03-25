@@ -30,10 +30,12 @@ export default function ProfileHeader() {
         }}>
         <Typography variant="h4">{user.display_name}</Typography>
         <Typography variant="body2">
-          @{user.username} - Member since 2024
+          @{user.username} - Member since 2024{" "}
+          {/* TODO: replace with user.created_at when server exposes it */}
         </Typography>
         <Box>
-          <Chip label="Group Host" />
+          <Chip label="Group Host" />{" "}
+          {/* TODO: derive from user's group roles */}
         </Box>
       </Box>
     </Box>
