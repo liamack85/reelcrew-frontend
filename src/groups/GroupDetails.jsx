@@ -23,6 +23,7 @@ export default function GroupDetails() {
       <Link to="/groups">back to groups</Link>
       <p>Group Name: {groupDetail.name}</p>
       <p>Creator: {groupDetail.creator_id}</p>
+      <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
     </Box>
   )
 }
