@@ -34,8 +34,6 @@ export default function GroupDetails() {
     <Box sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
       <Typography variant="h1">Group Details</Typography>
       <Link to="/groups">back to groups</Link>
-      <p>Group Name: {group.name}</p>
-      <p>Creator: {group.creator_id}</p>
       <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
       <Typography variant="h2">
         {group.name} <button>Join</button>
