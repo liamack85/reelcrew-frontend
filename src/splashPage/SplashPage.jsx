@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import TopBar from "../layout/TopBar";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router";
