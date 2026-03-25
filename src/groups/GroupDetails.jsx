@@ -1,9 +1,9 @@
 import { getGroupById, getMembers } from "#src/api/groups";
-import { Box } from "@mui/material/Box";
-import { Typography } from "@mui/material/Typography";
-import { Chip } from "@mui/material/Chip";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
 
 /**
  * Displays details for a single group, including its members.
