@@ -15,10 +15,16 @@ export default function SplashPage() {
   const navigate = useNavigate();
 
   return (
-    <Box component="main" sx={{ display: "flex", flexDirection: "column" }}>
-      <TopBar />
-      <Typography variant="h4">REELCREW - WATCH TOGETHER</Typography>
-      <Typography variant="h5">Watch together, on time.</Typography>
+    <Box
+      component="main"
+      sx={{ display: "flex", flexDirection: "column", margin: 5, gap: 1 }}>
+      <Typography color="primary" variant="s1">
+        REELCREW • WATCH TOGETHER
+      </Typography>
+      <Typography variant="h2">Watch together,</Typography>
+      <Typography color="primary" fontStyle="italic" variant="h2">
+        on time.
+      </Typography>
       <Typography variant="body1">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. A, aspernatur!
       </Typography>
@@ -26,10 +32,15 @@ export default function SplashPage() {
         {/* Lazy gate — opens auth modal if logged out, navigates to groups if logged in */}
         <Button
           variant="contained"
+          size="large"
+          sx={{ px: 4, py: 2, fontSize: "1.2rem", fontWeight: "700" }}
           onClick={!user ? openAuthModal : () => navigate("/groups")}>
-          Start Watch Group
+          Start Watch Group ▶
         </Button>
-        <Button variant="outlined" onClick={() => navigate("/films")}>
+        <Button
+          variant="outlined"
+          onClick={() => navigate("/films")}
+          sx={{ px: 2, fontSize: "1.1rem", fontWeight: "500" }}>
           Browse Films
         </Button>
       </Stack>
