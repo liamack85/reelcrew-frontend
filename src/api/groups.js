@@ -105,20 +105,21 @@ export async function joinGroup(token, id, user_id, role) {
  *
  * @param {string} token - Bearer token for authentication.
  * @param {number} groupId - ID of the group to leave.
+ * @param {number} user_id - user id to remove from group.
  * @throws {Error} If not signed in or if the request fails.
  */
-export async function leaveGroup(token, groupId) {
+export async function leaveGroup(token, id, user_id) {
   if (!token) {
     throw Error("You are not signed in.");
   }
 
-  const response = await fetch(API + "/groups/" + groupId + "/members/me", {
+  const response = await fetch(API+"/watch-groups/"+id+"/members", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer" + token,
     },
-    body: JSON.stringify({ from: "group_members" }),
+    body: JSON.stringify({ id, user_id }),
   });
 
   if (!response.ok) {
