@@ -17,7 +17,7 @@ export default function WatchPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const watchData = await getCurrentWatch(token, id);
+        const watchData = await getCurrentWatch(id);
         setWatch(watchData);
       } catch (e) {
         setError(e.message);
