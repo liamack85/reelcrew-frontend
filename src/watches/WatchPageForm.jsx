@@ -4,6 +4,10 @@ import { useAuth } from "../auth/AuthContext";
 import { assignWatch } from "../api/watches";
 import { getFilms } from "../api/films";
 
+/**
+ * Form for assigning a film to a watch group. Lets the host search for a film select it, set a deadline, and optionally add a discussion prompt.
+ */
+
 export default function WatchForm() {
   const { id } = useParams();
   const { token } = useAuth();
@@ -16,6 +20,8 @@ export default function WatchForm() {
   const [discussionPrompt, setDiscussionPrompt] = useState("");
   const [error, setError] = useState(null);
 
+  /** Searches for films via the OMDb API and updates the results list */
+
   const handleSearch = async () => {
     try {
       const films = await getFilms(query);
@@ -24,6 +30,8 @@ export default function WatchForm() {
       setError(e.message);
     }
   };
+
+/** Validates the form and assigns the selected film to the group */
 
   const handleSubmit = async (e) => {
     e.preventDefault();

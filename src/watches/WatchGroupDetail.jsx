@@ -4,6 +4,10 @@ import { useAuth } from "../auth/AuthContext";
 import { getCurrentWatch } from "../api/watches";
 import MemberList from "./MemberList";
 
+/**
+ * Displays the detail page for a group's current watch event, including the film info, deadline countdown, group progress bar, and member list.
+ */
+
 export default function WatchPage() {
   const { id } = useParams();
   const { token, user } = useAuth();

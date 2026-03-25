@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react=router";
 import { getWatchesByGroup } from "../api/groups";
 
+/**
+ * Displays a list of all watch events for a specific group showing the film title, director, deadline, and status for each.
+ */
+
 export default function WatchPageList () {
 
   const { id } = useParams();
