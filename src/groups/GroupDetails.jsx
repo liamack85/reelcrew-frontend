@@ -3,16 +3,21 @@ import { Box, Chip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router"
 
+/**
+ * Displays details for a single group, including its members.
+ * @returns {JSX.Element} 
+ */
 export default function GroupDetails() {
   const {id} = useParams();
   const [group, setGroup] = useState(null);
   const [groupMembers, setGroupMembers] = useState(null);
   
+  /**
+   * Fetch group details and members from the API and update component state.
+   */
   const syncGroupDetail = async() => {
     const group = await getGroupById(id);
     const groupMembers = await getMembers(id);
-    console.log(groupMembers);
-    
     setGroup(group);
     setGroupMembers(groupMembers);
   }
@@ -36,11 +41,10 @@ export default function GroupDetails() {
       <p>Active members: {groupMembers.length}</p>
       {groupMembers.map((member)=>(
         <li key={member.id}>
-          <p>{member.username}
+          {member.username}
           {member.role === "host" ? 
           <Chip label={member.role} size="small" sx={{ mt: 0.5 }} />
           : null}
-          </p>
 
         </li>
       ))}
