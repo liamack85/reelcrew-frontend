@@ -1,3 +1,10 @@
+/**
+ * Displays a list of group members with their role, watch status, and avatar initials.
+ * 
+ * @param {Object} props
+ * @param {Array} props.members - Array of member objects from the group watch progress data
+ */
+
 export default function MemberList({ members }) {
   if (!members) {
     return <p>There are no members. Add some!</p>;
@@ -36,6 +43,13 @@ export default function MemberList({ members }) {
   );
 }
 
+/**
+ * Extracts the first letter of each word in a name to create avatar initials.
+ * 
+ * @param {string} name - A user's display name
+ * @returns {string} Uppercase initials (e.g. "Big Terry" → "BT")
+ */
+
 export function getInitials(name) {
   return name
     .split(" ")
@@ -43,6 +57,13 @@ export function getInitials(name) {
     .join("")
     .toUpperCase();
 }
+
+/**
+ * Formats a date string into a short, readable format.
+ * 
+ * @param {string} dateString - An ISO date string
+ * @returns {string} Formatted date (e.g. "Mar 24")
+ */
 
 function formatDate(dateString) {
   const date = new Date(dateString);
