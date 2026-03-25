@@ -1,4 +1,4 @@
-import { getGroupById, getMembers } from "#src/api/groups";
+import { getGroupById, getMembers } from "../api/groups";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Box from "@mui/material/Box";
