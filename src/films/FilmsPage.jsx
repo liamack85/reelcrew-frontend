@@ -3,6 +3,7 @@ import { getFilms } from "../api/films";
 import { useAuth } from "../auth/AuthContext";
 import FilmCard from "./FilmCard";
 import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
 
 /* A React component that fetches and displays a list of 
 films */
@@ -10,6 +11,10 @@ export default function FilmsPage() {
   const { token } = useAuth();
   const [films, setFilms] = useState(null);
   const [query, setQuery] = useState("");
+  /* Tracks current page number for pagination and 
+  films per page */
+  const [page, setPage] = useState(1);
+  const filmsPerPage = 10;
   const debounce = useRef();
 
   /* Search logic  with error catch that runs when query 
@@ -31,7 +36,17 @@ export default function FilmsPage() {
     return () => clearTimeout(debounce.current);
   }, [query]);
 
+  /* Reset pagination to page 1 when search query changes */
+  useEffect(() => {
+    setPage(1);
+  }, [query]);
+
   if (films === null) return <p>Loading...</p>;
+
+  /* Gets starting index from current page */
+  const startIndex = (page - 1) * filmsPerPage;
+  /* Slices a subset of films for the current page */
+  const paginatedFilms = films.slice(startIndex, startIndex + filmsPerPage);
 
   /* Controlled input for the search function. Updates
   query state on change and triggers the debounced fetch.
@@ -50,16 +65,23 @@ export default function FilmsPage() {
       {films.length === 0 ? (
         <p>No films found.</p>
       ) : (
-        <Stack
-          spacing={2}
-          component="ul"
-          sx={{ listStyle: "none", padding: 0 }}
-        >
-          {/* Displays matched results */}
-          {films.map((film) => (
-            <FilmCard key={film.id} film={film} token={token} />
-          ))}
-        </Stack>
+        <>
+          <Stack
+            spacing={2}
+            component="ul"
+            sx={{ listStyle: "none", padding: 0 }}
+          >
+            {paginatedFilms.map((film) => (
+              <FilmCard key={film.id} film={film} token={token} />
+            ))}
+          </Stack>
+          <Pagination
+            count={Math.ceil(films.length / filmsPerPage)}
+            page={page}
+            onChange={(e, value) => setPage(value)}
+            sx={{ mt: 2, display: "flex", justifyContent: "center" }}
+          />
+        </>
       )}
     </section>
   );
