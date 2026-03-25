@@ -18,8 +18,8 @@ export default function FilmPoster({ film }) {
         alt={film.title}
         sx={{
           width: "100%",
-          height: "200px",
-          objectFit: "cover",
+          height: "auto",
+          objectFit: "contain",
           borderRadius: 1,
         }}
       />
