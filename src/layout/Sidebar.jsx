@@ -28,13 +28,8 @@ const navItems = [
 ];
 
 export default function Sidebar() {
-  const { user, logout, openAuthModal } = useAuth();
+  const { user, openAuthModal } = useAuth();
   const navigate = useNavigate();
-
-  function handleLogout() {
-    logout();
-    navigate("/");
-  }
 
   return (
     <Box sx={{ display: "flex" }}>
