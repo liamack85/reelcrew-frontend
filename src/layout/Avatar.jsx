@@ -22,7 +22,7 @@ export default function UserAvatar() {
   }
 
   // stopPropagation lets clicks outside Avatar trigger handleClose
-  // prevents issue of dropdown remaining open after click oputside element
+  // prevents issue of dropdown remaining open after click outside element
   function handleClose(event) {
     event.stopPropagation();
     setAnchorEl(null);
