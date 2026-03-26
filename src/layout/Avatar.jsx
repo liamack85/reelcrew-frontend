@@ -42,6 +42,7 @@ export default function UserAvatar() {
       <Avatar>{initials}</Avatar>
       <Box>
         <Typography>{user.display_name}</Typography>
+        <Typography>@{user.username}</Typography>
       </Box>
       {/* open={Boolean(anchorEl)} — truthy HTML element = menu open, null = closed
           anchorEl also tells Menu where to position relative to the trigger element*/}
