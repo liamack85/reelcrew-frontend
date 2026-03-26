@@ -39,8 +39,9 @@ export default function FilmPoster({ film }) {
         <Typography
           variant="h6"
           component={Link}
-          to={"/films/" + film.id}
-          sx={{ textDecoration: "none", color: "inherit" }}>
+          to={"/films/" + film.film_id}
+          sx={{ textDecoration: "none", color: "inherit" }}
+        >
           {film.title}
         </Typography>
         <Chip
