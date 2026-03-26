@@ -8,6 +8,26 @@ import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import Skeleton from "@mui/material/Skeleton";
+
+export function FilmCardSkeleton() {
+  return (
+    <Card sx={{ display: "flex", gap: 2, padding: 1 }}>
+      <Skeleton
+        cariant="rectangular"
+        width={80}
+        height={120}
+        sx={{ borderRadius: 1, flexShrink: 0 }}
+      />
+      <CardContent sx={{ flex: 1, padding: 0 }}>
+        <Skeleton variant="text" width="60%" height={32} />
+        <Skeleton variant="text" width="40" />
+        <Skeleton variant="rounded" width={80} height={24} sx={{ mt: 0.5 }} />
+        <Skeleton variant="text" width={60} />
+      </CardContent>
+    </Card>
+  );
+}
 
 /* A reusable React component that displays film information.
 An authenticated user can add a film to their watchlist */
