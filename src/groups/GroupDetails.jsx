@@ -1,6 +1,6 @@
-import { getGroupById, getMembers, joinGroup, leaveGroup } from "../api/groups";
+import { deleteGroup, getGroupById, getMembers, joinGroup, leaveGroup } from "../api/groups";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -16,6 +16,7 @@ export default function GroupDetails() {
   const { id } = useParams();
   const [group, setGroup] = useState(null);
   const [groupMembers, setGroupMembers] = useState(null);
+  const navigate = useNavigate();
 
   /**
    * Fetch group details and members from the API and update component state.
@@ -56,12 +57,22 @@ export default function GroupDetails() {
     }
   }
 
+  const deleteCurrentGroup = async () => {
+    try {
+      await deleteGroup(token, id);
+      navigate("/groups");
+    } catch (err) {
+      console.error('Delete failed: ', err);
+    }
+  }
+
 /**
  * Whether the current authenticated user is a member of the group.
  *
  * @type {boolean}
  */
   const isMember = groupMembers.some(m => m.user_id === user.id);
+  
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
@@ -75,6 +86,7 @@ export default function GroupDetails() {
         <button onClick={leaveCurrentGroup}>Leave Group</button> :
         <button onClick={joinCurrentGroup}>Join</button>
         }
+        <button onClick={deleteCurrentGroup}>DELETE group</button>
       </Typography>
       <p>
         Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
