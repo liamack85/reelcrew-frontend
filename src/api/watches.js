@@ -42,7 +42,7 @@ export async function assignWatch(
     body: JSON.stringify({
       group_id: groupId,
       film_id: filmId,
-      deadline,
+      deadline: deadline,
       status: "watching",
       ...(discussionPrompt && { discussion_prompt: discussionPrompt }),
     }),
