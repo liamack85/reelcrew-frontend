@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getFilms } from "../api/films";
 import { useAuth } from "../auth/AuthContext";
-import FilmCard from "./FilmCard";
+import FilmCard, { FilmCardSkeleton } from "./FilmCard";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 
@@ -41,7 +41,21 @@ export default function FilmsPage() {
     setPage(1);
   }, [query]);
 
-  if (films === null) return <p>Loading...</p>;
+  if (films === null)
+    return (
+      <section>
+        <h1>Films</h1>
+        <Stack
+          spacing={2}
+          component="ul"
+          sx={{ listStyle: "none", padding: 0 }}
+        >
+          {Array.from({ length: 10 }).map((_, i) => (
+            <FilmCardSkeleton key={i} />
+          ))}
+        </Stack>
+      </section>
+    );
 
   /* Gets starting index from current page */
   const startIndex = (page - 1) * filmsPerPage;
