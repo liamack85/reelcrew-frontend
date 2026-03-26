@@ -128,6 +128,18 @@ export async function leaveGroup(token, id, user_id) {
   }
 }
 
+export async function deleteGroup(token, id) {
+  const response = await fetch(API + "/watch-groups/" + id, {
+    method: "DELETE",
+    headers: { Authorization: "Bearer " + token },
+  });
+  if (!response.ok) {
+    const result = await response.json();
+    throw Error(result.message);
+  }
+
+}
+
 export async function getMyGroups(token) {
   const response = await fetch(API + "/watch-groups/mine", {
     headers: {
