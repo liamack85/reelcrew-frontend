@@ -6,38 +6,50 @@ const API = import.meta.env.VITE_API;
  * @param {number} groupId the watch group ID
  * @returns {Object} the current watch event with film and progress data
  */
-
 export async function getCurrentWatch(groupId) {
-  const response = await fetch(API + "/group-watches/group/" + groupId + "/current");
+  const response = await fetch(
+    API + "/group-watches/group/" + groupId + "/current",
+  );
   const result = await response.json();
   return result;
 }
 
 /**
- * Assigns a film to a watch group as a new watch event
+ * Assigns a film to a watch group as a new watch event.
+ * Status is hardcoded to "watching" on creation.
+ * Throws on error — caller is responsible for handling.
  *
- * @param {string} token the bearer token for authentication
- * @param {number} groupId the watch group ID
- * @param {number} filmId the film ID to assign
- * @returns {Object} the newly created watch event
+ * @param {string} token - Bearer token for authentication
+ * @param {number} groupId - The watch group ID
+ * @param {number} filmId - The film ID to assign
+ * @param {string} deadline - ISO date string for the watch deadline
+ * @param {string} [discussionPrompt] - Optional discussion prompt for the group
+ * @returns {Promise<Object>} The newly created group watch entry
  */
-
-export async function assignWatch(token, groupId, filmId) {
-  try {
-    const response = await fetch(API+"/groups/"+groupId+"/watches", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({ groupId, filmId }),
-    });
-    const result = await response.json();
-    if (!token) throw Error(result.message);
-    return result;
-  } catch (e) {
-    console.log('CANNOT ASSIGN: ', e);
-  }
+export async function assignWatch(
+  token,
+  groupId,
+  filmId,
+  deadline,
+  discussionPrompt,
+) {
+  const response = await fetch(API + "/group-watches", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify({
+      group_id: groupId,
+      film_id: filmId,
+      deadline: deadline,
+      status: "watching",
+      ...(discussionPrompt && { discussion_prompt: discussionPrompt }),
+    }),
+  });
+  const result = await response.json();
+  if (!response.ok) throw Error(result.message);
+  return result;
 }
 
 /**
@@ -47,10 +59,9 @@ export async function assignWatch(token, groupId, filmId) {
  * @param {number} groupId the watch group ID
  * @returns {Object} the updated watch progress
  */
-
 export async function markWatched(token, groupId) {
   try {
-    const response = await fetch(API+"/groups/"+groupId+"/progress", {
+    const response = await fetch(API + "/groups/" + groupId + "/progress", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +73,7 @@ export async function markWatched(token, groupId) {
     if (!response.ok) throw Error(result.message);
     return result;
   } catch (e) {
-    console.log('CANNOT CAST VOTES: ', e);
+    console.log("CANNOT CAST VOTES: ", e);
   }
 }
 
@@ -74,10 +85,9 @@ export async function markWatched(token, groupId) {
  * @param {number} filmId the film ID to vote for
  * @returns {Object} the created vote record
  */
-
 export async function castVote(token, groupId, filmId) {
   try {
-    const response = await fetch(API+"/groups/"+groupId+"/votes", {
+    const response = await fetch(API + "/groups/" + groupId + "/votes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +99,7 @@ export async function castVote(token, groupId, filmId) {
     if (!response.ok) throw Error(result.message);
     return result;
   } catch (e) {
-    console.log('CANNOT CAST VOTES: ', e);
+    console.log("CANNOT CAST VOTES: ", e);
   }
 }
 
@@ -99,13 +109,12 @@ export async function castVote(token, groupId, filmId) {
  * @param {number} groupId the watch group ID
  * @returns {Array} list of votes for the group
  */
-
 export async function getVotes(groupId) {
   try {
-    const response = await fetch(API+"/groups/"+groupId+"/votes");
+    const response = await fetch(API + "/groups/" + groupId + "/votes");
     const result = await response.json();
-    return result;    
+    return result;
   } catch (e) {
-    console.log('CANNOT GET VOTES: ', e);
+    console.log("CANNOT GET VOTES: ", e);
   }
 }
