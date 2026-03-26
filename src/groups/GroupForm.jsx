@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createGroup } from "../api/groups";
 import { useAuth } from "../auth/AuthContext.jsx";
+import { useNavigate } from "react-router";
 
 /**
  * Form component to create a new group.
@@ -12,6 +13,7 @@ export default function GroupForm({ onCreated }) {
   const { token, user, openAuthModal } = useAuth();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   /**
    * Handle form submission: validates auth, calls API to create a group, and triggers onCreated.
@@ -30,9 +32,9 @@ export default function GroupForm({ onCreated }) {
     const groupName = formData.get("groupName");
 
     try {
-      await createGroup(token, groupName, user.id);
+      const newlyCreatedGroup = await createGroup(token, groupName, user.id);
       setSuccess("Group created.");
-      onCreated(); // refresh list on parent
+      navigate("/groups/"+newlyCreatedGroup.id);
     } catch (err) {
       setError(err.message || "CANNOT CREATE GROUP");
       console.error(err);
