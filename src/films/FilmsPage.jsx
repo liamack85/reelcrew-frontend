@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { getAllUserFilms } from "../api/users";
 import { getFilms } from "../api/films";
 import { useAuth } from "../auth/AuthContext";
 import FilmCard from "./FilmCard";
@@ -14,6 +15,7 @@ export default function FilmsPage() {
   /* Tracks current page number for pagination and 
   films per page */
   const [page, setPage] = useState(1);
+  const [watchlistIds, setWatchlistIds] = useState(new Set());
   const filmsPerPage = 10;
   const debounce = useRef();
 
@@ -35,6 +37,15 @@ export default function FilmsPage() {
     debounce.current = setTimeout(syncFilms, 300);
     return () => clearTimeout(debounce.current);
   }, [query]);
+
+  useEffect(() => {
+    const syncWatchlist = async () => {
+      if (!token) return;
+      const data = await getAllUserFilms(token);
+      setWatchlistIds(new Set(data.map((userFilm) => userFilm.film_id)));
+    };
+    syncWatchlist();
+  }, [token]);
 
   /* Reset pagination to page 1 when search query changes */
   useEffect(() => {
@@ -72,7 +83,12 @@ export default function FilmsPage() {
             sx={{ listStyle: "none", padding: 0 }}
           >
             {paginatedFilms.map((film) => (
-              <FilmCard key={film.id} film={film} token={token} />
+              <FilmCard
+                key={film.id}
+                film={film}
+                token={token}
+                isOnWatchlist={watchlistIds.has(film.id)}
+              />
             ))}
           </Stack>
           <Pagination

@@ -11,8 +11,8 @@ import Button from "@mui/material/Button";
 
 /* A reusable React component that displays film information.
 An authenticated user can add a film to their watchlist */
-export default function FilmCard({ film, token }) {
-  const [added, setAdded] = useState(false);
+export default function FilmCard({ film, token, isOnWatchlist }) {
+  const [added, setAdded] = useState(isOnWatchlist);
 
   /* Calls API with token and film id. Updates UI on
   success, logs error on failure. */
