@@ -1,4 +1,4 @@
-import { getFilmById } from "#src/api/films";
+import { getFilmById } from "../api/films";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useAuth } from "../auth/AuthContext";
