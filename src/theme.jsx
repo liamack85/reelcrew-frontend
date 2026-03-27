@@ -6,7 +6,7 @@ const ThemeModeContext = createContext({ toggleMode: () => {} });
 
 // Design tokens
 const colors = {
-  amber: "#EF9F27",
+  pink: "#ff49ed",
   teal: "#1D9E75",
   coral: "#D85A30",
   dark: "#0E0C09",
@@ -19,7 +19,7 @@ const colors = {
 const getDesignTokens = (mode) => ({
   palette: {
     mode,
-    primary: { main: colors.amber },
+    primary: { main: colors.pink },
     secondary: { main: colors.teal },
     error: { main: colors.coral },
     success: { main: colors.teal },
