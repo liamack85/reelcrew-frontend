@@ -23,7 +23,6 @@ const navItems = [
   { text: "Home", icon: HomeIcon, path: "/" },
   { text: "Films", icon: TheatersIcon, path: "/films" },
   { text: "Groups", icon: GroupsIcon, path: "/groups" },
-  { text: "Profile", icon: AccountBoxIcon, path: "/users/me" },
 ];
 
 /**
@@ -52,22 +51,12 @@ export default function Sidebar() {
           <List>
             {navItems.map(({ text, icon: Icon, path }) => (
               <ListItem key={text} disablePadding>
-                {/* Profile is the only navItem that requires auth - opens modal instead of navigating if logged out */}
-                {text === "Profile" && !user ? (
-                  <ListItemButton onClick={openAuthModal}>
-                    <ListItemIcon>
-                      <Icon />
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                ) : (
-                  <ListItemButton component={NavLink} to={path}>
-                    <ListItemIcon>
-                      <Icon />
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                )}
+                <ListItemButton component={NavLink} to={path}>
+                  <ListItemIcon>
+                    <Icon />
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
               </ListItem>
             ))}
           </List>

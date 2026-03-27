@@ -42,7 +42,7 @@ export default function UserAvatar() {
       <Avatar>{initials}</Avatar>
       <Box>
         <Typography>{user.display_name}</Typography>
-        <Typography>@{user.username}</Typography>
+        <Typography>Random Stats</Typography>
       </Box>
       {/* open={Boolean(anchorEl)} — truthy HTML element = menu open, null = closed
           anchorEl also tells Menu where to position relative to the trigger element*/}
@@ -51,7 +51,8 @@ export default function UserAvatar() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         onClick={handleClose}>
-        <MenuItem disabled>{user.display_name}</MenuItem>
+        <MenuItem disabled>@{user.username}</MenuItem>
+        <MenuItem onClick={() => navigate("/users/me")}>Profile</MenuItem>
         <MenuItem onClick={() => navigate("/users/me/watchlist")}>
           My Watchlist
         </MenuItem>
