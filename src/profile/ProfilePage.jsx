@@ -29,12 +29,15 @@ export default function ProfilePage() {
   return (
     <Box>
       <ProfileHeader />
-      <Divider />
+      <Divider sx={{ bgcolor: "primary.main" }} />
       <StatCards filmsLogged={watched.length} groupsJoined={groups.length} />
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "3fr 1fr",
+          gridTemplateColumns: {
+            sx: "1fr",
+            md: "3fr 1fr",
+          },
           gap: 2,
           margin: 1,
         }}>
