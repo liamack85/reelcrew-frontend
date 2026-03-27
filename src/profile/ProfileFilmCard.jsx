@@ -37,11 +37,10 @@ export default function FilmPoster({ film }) {
       />
       <CardContent>
         <Typography
-          variant="h6"
+          variant="body2"
           component={Link}
           to={"/films/" + film.film_id}
-          sx={{ textDecoration: "none", color: "inherit" }}
-        >
+          sx={{ textDecoration: "none", color: "inherit" }}>
           {film.title}
         </Typography>
         <Chip

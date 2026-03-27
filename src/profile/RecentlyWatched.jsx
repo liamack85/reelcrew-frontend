@@ -10,7 +10,13 @@ export default function RecentlyWatched({ films }) {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: {
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+            xl: "repeat(5, 1fr)",
+          },
           gap: 2,
           mt: 1,
         }}>
