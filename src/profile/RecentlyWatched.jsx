@@ -10,13 +10,19 @@ export default function RecentlyWatched({ films }) {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: {
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(3, 1fr)",
+            xl: "repeat(6, 1fr)",
+          },
           gap: 2,
           mt: 1,
         }}>
         {/* Limits to 8 most recent — ordered by id DESC from the API */}
         {films.slice(0, 8).map((film) => (
-          <FilmPoster key={film.id} film={film} />
+          <FilmPoster key={film.id} film={film} showBadge={false} />
         ))}
       </Box>
     </Box>
