@@ -1,8 +1,13 @@
 import { getGroups } from "../api/groups";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import GroupForm from "./GroupForm";
 import { useAuth } from "../auth/AuthContext";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import Typography from "@mui/material/Typography";
+
+
 
 /**
  * displays all groups and a form to create new ones
@@ -11,6 +16,7 @@ import { useAuth } from "../auth/AuthContext";
 export default function GroupsPage() {
   const { token, openAuthModal } = useAuth();
   const [groups, setGroups] = useState([]);
+  const navigate = useNavigate();
 
   /**
    * Fetch groups from the API and update groups state.
@@ -28,17 +34,17 @@ export default function GroupsPage() {
     <section id="GroupsPage">
       <h1>All Groups</h1>
       <GroupForm />
-      <ul>
+
         {groups.map((group) => (
-          <li key={group.id}>
-            {
-              !token ?
-              <Link onClick={openAuthModal}>{group.name}</Link> :
-              <Link to={"/groups/" + group.id}>{group.name}</Link>
-            }
-          </li>
+          <Card key={group.id} sx={{margin:1}}>
+              <CardActionArea  onClick={!token ? openAuthModal : ()=>navigate("/groups/" + group.id)}>
+                <Typography component="div" sx={{padding: 2}}>
+                  {group.name}
+                </Typography>
+              </CardActionArea>
+          </Card>
         ))}
-      </ul>
+      
     </section>
   );
 }
