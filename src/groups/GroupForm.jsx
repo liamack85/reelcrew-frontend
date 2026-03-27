@@ -2,6 +2,9 @@ import { useState } from "react";
 import { createGroup } from "../api/groups";
 import { useAuth } from "../auth/AuthContext.jsx";
 import { useNavigate } from "react-router";
+import  Button  from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 /**
  * Form component to create a new group.
@@ -44,9 +47,17 @@ export default function GroupForm() {
   return (
     <section>
       <form action={!token ? openAuthModal : handleForm}>
-        <label>Group Name</label>
-        <input required type="text" name="groupName" />
-        <button type="submit">Create Group</button>
+        <Typography component="label" htmlFor="groupName">
+        Create Group:
+      </Typography>
+        <TextField id="groupName"
+        name="groupName"
+        required
+        variant="outlined"
+        size="small" 
+        placeholder="Group Name"
+        />
+        <Button type="submit" variant="contained">Create Group</Button>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {success && <p style={{ color: "green" }}>{success}</p>}
       </form>
