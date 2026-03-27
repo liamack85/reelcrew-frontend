@@ -22,7 +22,7 @@ export default function RecentlyWatched({ films }) {
         }}>
         {/* Limits to 8 most recent — ordered by id DESC from the API */}
         {films.slice(0, 8).map((film) => (
-          <FilmPoster key={film.id} film={film} />
+          <FilmPoster key={film.id} film={film} showBadge={false} />
         ))}
       </Box>
     </Box>
