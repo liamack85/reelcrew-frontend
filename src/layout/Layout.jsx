@@ -11,10 +11,10 @@ export default function Layout() {
     <Box sx={{ display: "grid", gridTemplateColumns: `${drawerWidth}px 1fr` }}>
       <Sidebar />
       <AuthModal />
-      <main>
+      <Box component="main" sx={{ margin: 2 }}>
         <Toolbar />
         <Outlet />
-      </main>
+      </Box>
     </Box>
   );
 }
