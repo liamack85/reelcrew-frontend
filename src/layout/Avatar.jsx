@@ -38,11 +38,17 @@ export default function UserAvatar() {
   return (
     <Box
       onClick={handleOpen}
-      sx={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
-      <Avatar>{initials}</Avatar>
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        cursor: "pointer",
+        ml: 1,
+        gap: 1,
+      }}>
+      <Avatar sx={{ fontSize: "1rem" }}>{initials}</Avatar>
       <Box>
         <Typography>{user.display_name}</Typography>
-        <Typography>Random Stats</Typography>
+        <Typography variant="body2">Random Stats</Typography>
       </Box>
       {/* open={Boolean(anchorEl)} — truthy HTML element = menu open, null = closed
           anchorEl also tells Menu where to position relative to the trigger element*/}
