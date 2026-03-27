@@ -31,8 +31,12 @@ export default function ProfileHeader() {
         }}>
         <Typography variant="h4">{user.display_name}</Typography>
         <Typography variant="body2">
-          @{user.username} - Member since 2024{" "}
-          {/* TODO: replace with user.created_at when server exposes it */}
+          @{user.username} - Member since{" "}
+          {new Date(user.created_at).toLocaleDateString(undefined, {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}
         </Typography>
         <Box>
           <Chip label="Group Host" />{" "}
