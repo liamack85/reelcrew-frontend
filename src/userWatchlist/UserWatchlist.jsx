@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { getAllUserFilms } from "../api/users";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import FilmPoster from "../profile/ProfileFilmCard";
 
 /**
@@ -23,25 +25,47 @@ export default function UserWatchlist() {
     fetchFilms();
   }, [token]);
 
-  return (
-    <Box sx={{ padding: 2 }}>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "repeat(2, 1fr)",
-            sm: "repeat(3, 1fr)",
-            md: "repeat(4, 1fr)",
-            lg: "repeat(5, 1fr)",
-            xl: "repeat(8, 1fr)",
-          },
-          gap: 2,
-          mt: 2,
-        }}>
-        {films.map((film) => (
-          <FilmPoster key={film.id} film={film} />
-        ))}
+  if (films === null) return <Typography>Loading...</Typography>;
+
+  if (films.length === 0)
+    return (
+      <Box sx={{ padding: 3 }}>
+        <Typography variant="h4">My Watchlist</Typography>
+        <Typography color="text.secondary" sx={{ mt: 1 }}>
+          No films in your watchlist yet!
+        </Typography>
       </Box>
+    );
+
+  const watched = films.filter((f) => f.status === "watched");
+  const watchlist = films.filter((f) => f.status === "watchlist");
+
+  return (
+    <Box sx={{ padding: 3, display: "flex", flexDirection: "column", gap: 4 }}>
+      {watchlist.length > 0 && (
+        <Box>
+          <Typography variant="h4" sx={{ mb: 2 }}>
+            Watchlist
+          </Typography>
+          <Stack direction="row" flexWrap="wrap" gap={2}>
+            {watchlist.map((film) => (
+              <FilmPoster key={film.id} film={film} />
+            ))}
+          </Stack>
+        </Box>
+      )}
+      {watched.length > 0 && (
+        <Box>
+          <Typography variant="h4" sx={{ mb: 2 }}>
+            Watched
+          </Typography>
+          <Stack direction="row" flexWrap="wrap" gap={2}>
+            {watched.map((film) => (
+              <FilmPoster key={film.id} film={film} />
+            ))}
+          </Stack>
+        </Box>
+      )}
     </Box>
   );
 }

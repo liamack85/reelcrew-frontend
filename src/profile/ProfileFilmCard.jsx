@@ -31,7 +31,14 @@ export default function FilmPoster({ film, showBadge = true }) {
   };
 
   return (
-    <Card sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        padding: 1,
+        borderRadius: 2,
+      }}
+    >
       <CardMedia
         component="img"
         image={film.poster_url}
@@ -44,12 +51,14 @@ export default function FilmPoster({ film, showBadge = true }) {
         }}
       />
       <CardContent
-        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
+      >
         <Typography
           variant="body2"
           component={Link}
           to={"/films/" + film.film_id}
-          sx={{ textDecoration: "none", color: "inherit" }}>
+          sx={{ textDecoration: "none", color: "inherit" }}
+        >
           {film.title}
         </Typography>
         {showBadge && (
@@ -58,7 +67,8 @@ export default function FilmPoster({ film, showBadge = true }) {
               display: "flex",
               justifyContent: status === "watched" ? "flex-end" : "flex-start",
               mt: "auto",
-            }}>
+            }}
+          >
             <Chip
               label={status === "watched" ? "Watched" : "Watchlist"}
               color={status === "watched" ? "success" : "default"}
