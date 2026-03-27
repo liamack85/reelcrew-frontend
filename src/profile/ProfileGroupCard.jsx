@@ -32,7 +32,13 @@ export default function ProfileGroupCard({ groups }) {
             )
           : null;
         return (
-          <Stack key={`${group.id}-${group.deadline}`}>
+          <Stack
+            key={`${group.id}-${group.deadline}`}
+            sx={{
+              backgroundColor: "background.paper",
+              borderRadius: 2,
+              padding: 2,
+            }}>
             <Stack direction="row" justifyContent="space-between">
               <Typography>{group.name}</Typography>
               <ArrowForwardIcon
