@@ -34,7 +34,7 @@ export default function ProfilePage() {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "2fr 1fr",
+          gridTemplateColumns: "3fr 1fr",
           gap: 2,
           margin: 1,
         }}>
