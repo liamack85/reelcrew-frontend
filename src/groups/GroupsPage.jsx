@@ -1,7 +1,7 @@
 import { getGroups } from "../api/groups";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import GroupForm from "./groupForm";
+import GroupForm from "./GroupForm";
 import { useAuth } from "../auth/AuthContext";
 
 /**
@@ -27,7 +27,7 @@ export default function GroupsPage() {
   return (
     <section id="GroupsPage">
       <h1>All Groups</h1>
-      <GroupForm onCreated={syncGroups} />
+      <GroupForm />
       <ul>
         {groups.map((group) => (
           <li key={group.id}>

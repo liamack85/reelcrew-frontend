@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
  * @param {Function} props.onCreated - Callback invoked after successful creation to refresh parent data.
  * @returns {JSX.Element}
  */
-export default function GroupForm({ onCreated }) {
+export default function GroupForm() {
   const { token, user, openAuthModal } = useAuth();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
