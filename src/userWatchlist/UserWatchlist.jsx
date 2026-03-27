@@ -28,7 +28,13 @@ export default function UserWatchlist() {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: {
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(3, 1fr)",
+            md: "repeat(4, 1fr)",
+            lg: "repeat(5, 1fr)",
+            xl: "repeat(8, 1fr)",
+          },
           gap: 2,
           mt: 2,
         }}>
