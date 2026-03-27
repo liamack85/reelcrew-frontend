@@ -14,9 +14,7 @@ export default function SplashPage() {
   const navigate = useNavigate();
 
   return (
-    <Box
-      component="main"
-      sx={{ display: "flex", flexDirection: "column", margin: 5, gap: 1 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", margin: 5, gap: 1 }}>
       <Typography color="primary" variant="s1">
         REELCREW • WATCH TOGETHER
       </Typography>
