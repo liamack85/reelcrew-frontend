@@ -12,6 +12,7 @@ import WatchForm from "./watches/WatchPageForm";
 import GroupDetails from "./groups/GroupDetails";
 import WatchPageList from "./watches/WatchPageList";
 import UserWatchlist from "./userWatchlist/UserWatchlist";
+import "./index.css";
 
 export default function App() {
   return (
