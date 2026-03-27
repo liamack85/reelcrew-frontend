@@ -1,6 +1,6 @@
 /**
  * Displays a list of group members with their role, watch status, and avatar initials.
- * 
+ *
  * @param {Object} props
  * @param {Array} props.members Array of member objects from the group watch progress data
  */
@@ -15,7 +15,7 @@ export default function MemberList({ members }) {
       <h2>Members</h2>
       <ul>
         {members.map((member) => (
-          <li key={member.userid} className="member-row">
+          <li key={member.user_id} className="member-row">
             <div className="member-avatar">
               {getInitials(member.display_name)}
             </div>
@@ -45,7 +45,7 @@ export default function MemberList({ members }) {
 
 /**
  * Extracts the first letter of each word in a name to create avatar initials.
- * 
+ *
  * @param {string} name a user's display name
  * @returns {string} uppercase initials (e.g. "Big Terry" → "BT")
  */
@@ -60,12 +60,12 @@ export function getInitials(name) {
 
 /**
  * Formats a date string into a short, readable format.
- * 
+ *
  * @param {string} dateString - An ISO date string
  * @returns {string} Formatted date (e.g. "Mar 24")
  */
 
 function formatDate(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString({ month: "short", day: "numeric" });
+  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
