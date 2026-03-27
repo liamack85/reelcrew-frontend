@@ -35,7 +35,7 @@ export default function AuthPanel() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 1, padding: 2 }}>
       <ToggleButtonGroup
         value={mode}
         exclusive
@@ -55,7 +55,8 @@ export default function AuthPanel() {
           </>
         )}
 
-        <Button type="submit">{mode}</Button>
+        <Button type="submit"
+            variant="contained">{mode}</Button>
         {error && <Typography color="error">{error}</Typography>}
       </form>
     </Box>

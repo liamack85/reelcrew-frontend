@@ -5,6 +5,7 @@ import { useAuth } from "../auth/AuthContext";
 import FilmCard, { FilmCardSkeleton } from "./FilmCard";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
+import TextField from "@mui/material/TextField";
 
 /* A React component that fetches and displays a list of 
 films */
@@ -80,7 +81,7 @@ export default function FilmsPage() {
     <section>
       <h1>Films</h1>
       <form onSubmit={(e) => e.preventDefault()}>
-        <input
+        <TextField
           type="search"
           placeholder="Search films..."
           value={query}
