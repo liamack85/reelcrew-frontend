@@ -1,6 +1,7 @@
 import { addToWatchlist } from "../api/films";
 import { useState } from "react";
 import { Link } from "react-router";
+import { useAuth } from "../auth/AuthContext";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -32,11 +33,16 @@ export function FilmCardSkeleton() {
 /* A reusable React component that displays film information.
 An authenticated user can add a film to their watchlist */
 export default function FilmCard({ film, token, isOnWatchlist }) {
+  const { openAuthModal } = useAuth();
   const [added, setAdded] = useState(isOnWatchlist);
 
   /* Calls API with token and film id. Updates UI on
   success, logs error on failure. */
   const handleAddToWatchlist = async () => {
+    if (!token) {
+      openAuthModal();
+      return;
+    }
     try {
       await addToWatchlist(token, film.id);
       setAdded(true);
@@ -73,16 +79,14 @@ export default function FilmCard({ film, token, isOnWatchlist }) {
         )}
       </CardContent>
       <CardActions sx={{ alignSelf: "flex-end", padding: 0 }}>
-        {token && (
-          <Button
-            size="small"
-            variant="contained"
-            onClick={handleAddToWatchlist}
-            disabled={added}
-          >
-            {added ? "Added!" : "+ Watchlist"}
-          </Button>
-        )}
+        <Button
+          size="small"
+          variant="contained"
+          onClick={handleAddToWatchlist}
+          disabled={added}
+        >
+          {added ? "Added!" : "+ Watchlist"}
+        </Button>
       </CardActions>
     </Card>
   );
