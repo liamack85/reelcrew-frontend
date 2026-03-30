@@ -87,9 +87,6 @@ export default function GroupDetails() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
       <Link to="/groups">back to groups</Link>
-      {isHost && (
-        <Link to={"/watch-group/" + id + "/assign"}>Create watch event</Link>
-      )}
       <Typography variant="h2">
         {group.name}
         <Box sx={{ display: "flex", gap: 1 }}>
@@ -98,6 +95,11 @@ export default function GroupDetails() {
             <Button variant="outlined" onClick={joinCurrentGroup}>Join</Button>
           }
           <Button variant="contained" onClick={deleteCurrentGroup}>DELETE group</Button>
+          {isHost && (
+          <Button variant="outlined" component={Link} to={"/watch-group/" + id + "/assign"}>
+            Create watch event
+          </Button>
+    )}
         </Box>
       </Typography>
       <p>
