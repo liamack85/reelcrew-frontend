@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import { TableCell } from "@mui/material";
+import TableCell from "@mui/material/TableCell";
 
 /**
  * Displays details for a single group, including its members.
@@ -92,7 +92,6 @@ export default function GroupDetails() {
         <Button variant="contained" onClick={deleteCurrentGroup}>DELETE group</Button>
       </Box>
       </h1>
-      <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
       <p>
         Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         Similique fugiat, aperiam nemo totam earum veniam, odit, molestias eius
@@ -100,6 +99,8 @@ export default function GroupDetails() {
         doloribus distinctio?
       </p>
 
+      <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
+      <WatchPageList />
       <Table>
         <p>Active members: {groupMembers.length}</p>
         <TableBody>
@@ -108,14 +109,13 @@ export default function GroupDetails() {
           <TableCell key={member.id}>
             {member.username}
             {member.role === "host" ? (
-              <Chip label={member.role} size="small" sx={{ mt: 0.5 }} />
+              <Chip label={member.role} size="small" sx={{ml: 0.5}} />
             ) : null}
           </TableCell>
           </TableRow>
         ))}
         </TableBody>
       </Table>
-      <WatchPageList />
     </Box>
   );
 }

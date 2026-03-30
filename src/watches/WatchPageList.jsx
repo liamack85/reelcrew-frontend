@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router";
+import { useParams, Link, useNavigate } from "react-router";
 import { getWatchesByGroup } from "../api/groups";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
 
 /**
  * Displays a list of all watch events for a specific group showing the film title, director, deadline, and status for each.
@@ -10,6 +17,7 @@ export default function WatchPageList() {
   const { id } = useParams();
   const [watches, setWatches] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchWatches() {
@@ -31,20 +39,24 @@ export default function WatchPageList() {
       {watches.length === 0 ? (
         <p>No watches yet for this group</p>
       ) : (
-        <ul>
-          {watches.map((watch) => (
-            <li key={watch.id}>
-              <Link to={"/watch-group/" + watch.group_id}>
-                <h2>{watch.title}</h2>
-                <p>
+      <Stack direction="row" spacing={1}>
+        {watches.map((watch) => (
+          <Card key={watch.id} sx={{maxWidth: 320}}>
+            <CardActionArea onClick={()=>navigate("/watch-group/" + watch.group_id)}>
+            <CardContent>
+
+                <Typography variant="h5" component="div">{watch.title}</Typography>
+                <Typography variant="body2">
                   {watch.year} · {watch.director}
-                </p>
+                </Typography>
                 <p>Deadline: {watch.deadline}</p>
-                <p>Status: {watch.status}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                <p>Status: <Chip label={watch.status} color={watch.status === "complete" ? "success":""} size="small"/></p>
+
+            </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
+      </Stack>
       )}
     </section>
   );
