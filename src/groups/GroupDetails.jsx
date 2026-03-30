@@ -82,11 +82,13 @@ export default function GroupDetails() {
  * @type {boolean}
  */
   const isHost = groupMembers.some(m => m.user_id === user.id && m.role === "host");
-  
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
       <Link to="/groups">back to groups</Link>
+      {isHost && (
+      <Link to={"/watch-group/" + id + "/assign"}>Create watch event</Link>
+      )}
       <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
       <Typography variant="h2">
         {group.name} 
