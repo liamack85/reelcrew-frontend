@@ -72,12 +72,21 @@ export default function GroupDetails() {
  * @type {boolean}
  */
   const isMember = groupMembers.some(m => m.user_id === user.id);
+
+  /**
+ * Whether the current authenticated user is the host of the group.
+ * @type {boolean}
+ */
+  const isHost = groupMembers.some(m => m.user_id === user.id && m.role === "host");
   
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
       <Typography variant="h1">Group Details</Typography>
       <Link to="/groups">back to groups</Link>
+      {isHost && (
+        <Link to={"/watch-group/" + id + "/assign"}>Create watch event</Link>
+      )}
       <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
       <Typography variant="h2">
         {group.name} 
