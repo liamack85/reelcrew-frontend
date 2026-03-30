@@ -5,6 +5,8 @@ import { getCurrentWatch } from "../api/watches";
 import { getFilms } from "../api/films";
 import MemberList from "./MemberList";
 
+const API = import.meta.env.VITE_API;
+
 /**
  * Displays the detail page for a group's current watch event, including the film info, deadline countdown, group progress bar, and member list.
  */
@@ -83,7 +85,7 @@ export default function WatchPage() {
     }
  
     try {
-      const res = await fetch(`/api/group-watches/${watch.id}`, {
+      const res = await fetch(API + "/group-watches/" + watch.id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +110,7 @@ export default function WatchPage() {
  
   async function handleDelete() {
     try {
-      const res = await fetch(`/api/group-watches/${watch.id}`, {
+      const res = await fetch(API + "/group-watches/" + watch.id, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
