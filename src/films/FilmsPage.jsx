@@ -57,15 +57,7 @@ export default function FilmsPage() {
   if (films === null)
     return (
       <section>
-        <Typography
-          variant="h3"
-          sx={{
-            color: "#ff49ed",
-            pt: 3,
-            pb: 2,
-            fontWeight: "bold",
-          }}
-        >
+        <Typography color="primary" variant="h2">
           Films
         </Typography>
         <Stack
@@ -90,15 +82,7 @@ export default function FilmsPage() {
   Prevents page reload on enter. */
   return (
     <section>
-      <Typography
-        variant="h3"
-        sx={{
-          color: "#ff49ed",
-          pt: 3,
-          pb: 2,
-          fontWeight: "bold",
-        }}
-      >
+      <Typography color="primary" variant="h2">
         Films
       </Typography>
       <form onSubmit={(e) => e.preventDefault()}>

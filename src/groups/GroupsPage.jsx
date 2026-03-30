@@ -32,7 +32,7 @@ export default function GroupsPage() {
 
   return (
     <section id="GroupsPage">
-      <h1>All Groups</h1>
+      <Typography color="primary" variant="h2">All Groups</Typography>
       <GroupForm />
 
         {groups.map((group) => (
