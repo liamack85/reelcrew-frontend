@@ -65,7 +65,7 @@ export function getInitials(name) {
  * @returns {string} Formatted date (e.g. "Mar 24")
  */
 
-function formatDate(dateString) {
+export function formatDate(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  return date.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
 }

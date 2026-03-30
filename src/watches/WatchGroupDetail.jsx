@@ -47,7 +47,7 @@ export default function WatchPage() {
  
   const today = new Date();
   const deadlineDate = new Date(watch.deadline);
-  const daysLeft = Math.round((deadlineDate - today) / 86400000);
+  const daysLeft = Math.max(0, Math.round((deadlineDate - today) / 86400000));
  
   const isCreator = user?.id === watch.group_creator_id;
  
@@ -221,7 +221,7 @@ export default function WatchPage() {
 
       <section id="watch-deadline">
         <h2>Watch deadline</h2>
-        <p>{watch.deadline}</p>
+        <p>{formatDate(watch.deadline)}</p>
         <p>{daysLeft} days left</p>
       </section>
 
