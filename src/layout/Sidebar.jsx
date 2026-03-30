@@ -17,7 +17,6 @@ import UserAvatar from "./Avatar";
 import HomeIcon from "@mui/icons-material/Home";
 import TheatersIcon from "@mui/icons-material/Theaters";
 import GroupsIcon from "@mui/icons-material/Groups";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 const navItems = [
   { text: "Home", icon: HomeIcon, path: "/" },
@@ -51,7 +50,15 @@ export default function Sidebar() {
           <List>
             {navItems.map(({ text, icon: Icon, path }) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton component={NavLink} to={path}>
+                <ListItemButton
+                  component={NavLink}
+                  to={path}
+                  sx={{
+                    "&.active": {
+                      borderLeft: "3px solid",
+                      borderColor: "primary.main", // pink #ED2D86
+                    },
+                  }}>
                   <ListItemIcon>
                     <Icon />
                   </ListItemIcon>
