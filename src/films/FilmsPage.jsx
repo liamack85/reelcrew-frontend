@@ -6,6 +6,7 @@ import FilmCard, { FilmCardSkeleton } from "./FilmCard";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 /* A React component that fetches and displays a list of 
 films */
@@ -56,7 +57,17 @@ export default function FilmsPage() {
   if (films === null)
     return (
       <section>
-        <h1>Films</h1>
+        <Typography
+          variant="h3"
+          sx={{
+            color: "#ff49ed",
+            pt: 3,
+            pb: 2,
+            fontWeight: "bold",
+          }}
+        >
+          Films
+        </Typography>
         <Stack
           spacing={2}
           component="ul"
@@ -79,7 +90,17 @@ export default function FilmsPage() {
   Prevents page reload on enter. */
   return (
     <section>
-      <h1>Films</h1>
+      <Typography
+        variant="h3"
+        sx={{
+          color: "#ff49ed",
+          pt: 3,
+          pb: 2,
+          fontWeight: "bold",
+        }}
+      >
+        Films
+      </Typography>
       <form onSubmit={(e) => e.preventDefault()}>
         <TextField
           type="search"
