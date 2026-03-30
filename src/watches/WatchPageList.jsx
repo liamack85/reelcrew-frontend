@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import { getWatchesByGroup } from "../api/groups";
+import { formatDate } from "./MemberList";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
@@ -49,7 +50,7 @@ export default function WatchPageList() {
                 <Typography variant="body2">
                   {watch.year} · {watch.director}
                 </Typography>
-                <p>Deadline: {watch.deadline}</p>
+                <p>Deadline: {formatDate(watch.deadline)}</p>
                 <p>Status: <Chip label={watch.status} color={watch.status === "complete" ? "success":""} size="small"/></p>
 
             </CardContent>
