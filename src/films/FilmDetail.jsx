@@ -18,21 +18,19 @@ export default function FilmDetail() {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    const syncFilm = async () => {
-      const data = await getFilmById(id);
-      setFilm(data);
-    };
-    syncFilm();
-  }, [id]);
+    const syncAll = async () => {
+      const [filmData, watchlistData] = await Promise.all([
+        getFilmById(id),
+        token ? getAllUserFilms(token) : Promise.resolve([]),
+      ]);
 
-  useEffect(() => {
-    const syncWatchlist = async () => {
-      if (!token) return;
-      const data = await getAllUserFilms(token);
-      const isAdded = data.some((uf) => uf.film_id === parseInt(id));
+      setFilm(filmData);
+      const isAdded = watchlistData.some(
+        (userFilm) => userFilm.film_id === parseInt(id),
+      );
       setAdded(isAdded);
     };
-    syncWatchlist();
+    syncAll();
   }, [token, id]);
 
   const handleAddToWatchlist = async () => {

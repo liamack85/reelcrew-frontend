@@ -3,9 +3,13 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import WatchPageList from "../watches/WatchPageList";
+import Button from "@mui/material/Button";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 
 /**
  * Displays details for a single group, including its members.
@@ -82,21 +86,19 @@ export default function GroupDetails() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", padding: 1 }}>
-      <Typography variant="h1">Group Details</Typography>
       <Link to="/groups">back to groups</Link>
-      {isHost && (
-        <Link to={"/watch-group/" + id + "/assign"}>Create watch event</Link>
-      )}
       <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
       <Typography variant="h2">
         {group.name} 
+      <Box sx={{display:"flex", gap:1}}>
         {
         isMember ?
-        <button onClick={leaveCurrentGroup}>Leave Group</button> :
-        <button onClick={joinCurrentGroup}>Join</button>
+        <Button variant="outlined" onClick={leaveCurrentGroup}>Leave</Button> :
+        <Button variant="outlined" onClick={joinCurrentGroup}>Join</Button>
         }
-        <button onClick={deleteCurrentGroup}>DELETE group</button>
-      </Typography>
+        <Button variant="contained" onClick={deleteCurrentGroup}>DELETE group</Button>
+      </Box>
+      </h1>
       <p>
         Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         Similique fugiat, aperiam nemo totam earum veniam, odit, molestias eius
@@ -104,18 +106,23 @@ export default function GroupDetails() {
         doloribus distinctio?
       </p>
 
-      <ul>
+      <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
+      <WatchPageList />
+      <Table>
         <p>Active members: {groupMembers.length}</p>
+        <TableBody>
         {groupMembers.map((member) => (
-          <li key={member.id}>
+          <TableRow>
+          <TableCell key={member.id}>
             {member.username}
             {member.role === "host" ? (
-              <Chip label={member.role} size="small" sx={{ mt: 0.5 }} />
+              <Chip label={member.role} size="small" sx={{ml: 0.5}} />
             ) : null}
-          </li>
+          </TableCell>
+          </TableRow>
         ))}
-      </ul>
-      <WatchPageList />
+        </TableBody>
+      </Table>
     </Box>
   );
 }
