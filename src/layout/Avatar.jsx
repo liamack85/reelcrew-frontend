@@ -6,12 +6,17 @@ import Typography from "@mui/material/Typography";
 import { getInitials } from "../watches/MemberList";
 import { useAuth } from "../auth/AuthContext";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useMatch } from "react-router";
 
 /** Displays the logged-in user's avatar with a dropdown menu for navigation and logout. */
 export default function UserAvatar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Returns truthy if current page is User Profile or User Watchlist. Triggers color accent of user's initials icon
+  const onProfile = useMatch("/users/me");
+  const onWatchlist = useMatch("/users/me/watchlist");
+  const isActive = onProfile || onWatchlist;
 
   // Stores a reference to the clicked HTML element (event.currentTarget)
   // Starts closed = null, no menu visible
@@ -44,6 +49,8 @@ export default function UserAvatar() {
         cursor: "pointer",
         ml: 1,
         gap: 1,
+        borderLeft: isActive ? "3px solid" : "3px solid transparent",
+        borderLeftColor: isActive ? "primary.main" : "transparent",
       }}>
       <Avatar sx={{ fontSize: "1rem" }}>{initials}</Avatar>
       <Box>
