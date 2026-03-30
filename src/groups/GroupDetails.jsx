@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import { TableCell } from "@mui/material";
+import TableCell from "@mui/material/TableCell";
 
 /**
  * Displays details for a single group, including its members.
