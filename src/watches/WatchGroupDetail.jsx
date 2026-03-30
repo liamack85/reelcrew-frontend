@@ -221,7 +221,7 @@ export default function WatchPage() {
 
       <section id="watch-deadline">
         <h2>Watch deadline</h2>
-        <p>{watch.deadline}</p>
+        <p>{formatDate(watch.deadline)}</p>
         <p>{daysLeft} days left</p>
       </section>
 
