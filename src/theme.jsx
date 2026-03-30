@@ -6,7 +6,7 @@ const ThemeModeContext = createContext({ toggleMode: () => {} });
 
 // Design tokens
 const colors = {
-  pink: "#ff49ed",
+  pink: "#ED2D86",
   teal: "#1D9E75",
   coral: "#D85A30",
   dark: "#0E0C09",
