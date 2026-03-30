@@ -40,12 +40,13 @@ export default function FilmsPage() {
     return () => clearTimeout(debounce.current);
   }, [query]);
 
+  const syncWatchlist = async () => {
+    if (!token) return;
+    const data = await getAllUserFilms(token);
+    setWatchlistIds(new Set(data.map((userFilm) => userFilm.film_id)));
+  };
+
   useEffect(() => {
-    const syncWatchlist = async () => {
-      if (!token) return;
-      const data = await getAllUserFilms(token);
-      setWatchlistIds(new Set(data.map((userFilm) => userFilm.film_id)));
-    };
     syncWatchlist();
   }, [token]);
 
@@ -108,6 +109,7 @@ export default function FilmsPage() {
                 film={film}
                 token={token}
                 isOnWatchlist={watchlistIds.has(film.id)}
+                onWatchlistChange={syncWatchlist}
               />
             ))}
           </Stack>

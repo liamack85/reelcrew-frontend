@@ -1,5 +1,5 @@
 import { addToWatchlist } from "../api/films";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import Card from "@mui/material/Card";
@@ -32,9 +32,18 @@ export function FilmCardSkeleton() {
 
 /* A reusable React component that displays film information.
 An authenticated user can add a film to their watchlist */
-export default function FilmCard({ film, token, isOnWatchlist }) {
+export default function FilmCard({
+  film,
+  token,
+  isOnWatchlist,
+  onWatchlistChange,
+}) {
   const { openAuthModal } = useAuth();
   const [added, setAdded] = useState(isOnWatchlist);
+
+  useEffect(() => {
+    setAdded(isOnWatchlist);
+  }, [isOnWatchlist]);
 
   /* Calls API with token and film id. Updates UI on
   success, logs error on failure. */
@@ -46,6 +55,7 @@ export default function FilmCard({ film, token, isOnWatchlist }) {
     try {
       await addToWatchlist(token, film.id);
       setAdded(true);
+      if (onWatchlistChange) onWatchlistChange();
     } catch (e) {
       console.error(e);
     }
