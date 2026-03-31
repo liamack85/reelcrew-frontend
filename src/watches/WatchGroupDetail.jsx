@@ -23,7 +23,6 @@ const API = import.meta.env.VITE_API;
 /**
  * Displays the detail page for a group's current watch event.
  * Manages watch data fetching and the edit form.
- * Layout is composed from WatchHeader, WatchFilmInfo, WatchDiscussion, and MemberList.
  */
 export default function WatchPage() {
   const { id } = useParams();
@@ -117,7 +116,6 @@ export default function WatchPage() {
     <div id="watch-page">
       <WatchHeader watch={watch} />
 
-      {/* Two-column layout: poster left, info/edit form right */}
       <Box sx={{ display: "flex", gap: 4, padding: 3, flexDirection: { xs: "column", sm: "row" } }}>
         <Box
           component="img"
