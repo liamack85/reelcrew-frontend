@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../auth/AuthContext";
@@ -41,11 +43,26 @@ export default function SplashPage() {
           Browse Films
         </Button>
       </Stack>
-      <Stack direction="row" spacing={2}>
+      <Stack
+        direction="row"
+        sx={{ gap: "10px", padding: "10px", justifyContent: "space-around" }}>
         {/* TODO: replace with real app stats from the API */}
-        <Typography>Stat1</Typography>
-        <Typography>Stat2</Typography>
-        <Typography>Stat3</Typography>
+        <Card
+          variant="outlined"
+          sx={{ display: "flex", flexDirection: "column" }}>
+          <CardContent sx={{ textAlign: "center" }}>
+            <Typography variant="h5">2,384</Typography>
+            <Typography variant="body2">Groups Active</Typography>
+          </CardContent>
+        </Card>
+        <Card
+          variant="outlined"
+          sx={{ display: "flex", flexDirection: "column" }}>
+          <CardContent sx={{ textAlign: "center" }}>
+            <Typography variant="h5">9,423</Typography>
+            <Typography variant="body2">Films Watched</Typography>
+          </CardContent>
+        </Card>
       </Stack>
     </Box>
   );
