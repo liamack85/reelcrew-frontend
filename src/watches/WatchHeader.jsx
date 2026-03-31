@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 /**
- * Displays the top header for a watch event page — back link, group name, and member count.
+ * Displays the top header for a watch event page.
  * @param {{ watch: Object }} props
  */
 export default function WatchHeader({ watch }) {
