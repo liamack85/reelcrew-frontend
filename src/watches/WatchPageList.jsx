@@ -43,7 +43,7 @@ export default function WatchPageList() {
       <Stack direction="row" spacing={1}>
         {watches.map((watch) => (
           <Card key={watch.id} sx={{maxWidth: 320}}>
-            <CardActionArea onClick={()=>navigate("/watch-group/" + watch.group_id)}>
+            <CardActionArea onClick={()=>navigate("/watch-group/" + watch.id)}>
             <CardContent>
 
                 <Typography variant="h5" component="div">{watch.title}</Typography>
