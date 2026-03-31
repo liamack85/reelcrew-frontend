@@ -8,7 +8,7 @@ import { getFilms } from "../api/films";
  * Form for assigning a film to a watch group. Lets the host search for a film select it, set a deadline, and optionally add a discussion prompt.
  */
 
-export default function WatchForm() {
+export default function WatchForm({ onSuccess }) {
   const { id } = useParams();
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function WatchForm() {
 
     try {
       await assignWatch(token, id, selectedFilm.id, deadline, discussionPrompt);
-      navigate("/watch-group/" + id);
+      onSuccess?.();
     } catch (e) {
       setError(e.message);
     }
