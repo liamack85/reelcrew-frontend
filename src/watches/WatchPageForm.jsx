@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { assignWatch } from "../api/watches";
 import { getFilms } from "../api/films";
+import { useParams } from "react-router";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 /**
  * Form for assigning a film to a watch group. Lets the host search for a film select it, set a deadline, and optionally add a discussion prompt.
@@ -11,7 +18,6 @@ import { getFilms } from "../api/films";
 export default function WatchForm({ onSuccess }) {
   const { id } = useParams();
   const { token } = useAuth();
-  const navigate = useNavigate();
 
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -55,63 +61,73 @@ export default function WatchForm({ onSuccess }) {
     }
   };
 
-  return (
-    <section id="watch-form">
-      <h1>Assign a film</h1>
+return (
+  <>
+    <DialogTitle>Assign a film</DialogTitle>
+    <DialogContent>
+      <Stack spacing={2}>
 
-      <div id="film-search">
-        <input
-          type="text"
-          placeholder="Search for a film..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <TextField
+            placeholder="Search for a film..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            size="small"
+            fullWidth
+          />
+          <Button variant="outlined" onClick={handleSearch}>Search</Button>
+        </Box>
+
+        {searchResults.length > 0 && (
+          <Stack spacing={1}>
+            {searchResults.map((film) => (
+              <Box
+                key={film.id}
+                onClick={() => setSelectedFilm(film)}
+                sx={{
+                  padding: 1,
+                  borderRadius: 1,
+                  cursor: "pointer",
+                  backgroundColor: selectedFilm?.id === film.id ? "action.selected" : "background.paper",
+                  "&:hover": { backgroundColor: "action.hover" }
+                }}
+              >
+                <Typography variant="body1">{film.title}</Typography>
+                <Typography variant="body2" color="text.secondary">{film.year} · {film.director}</Typography>
+              </Box>
+            ))}
+          </Stack>
+        )}
+
+        {selectedFilm && (
+          <Typography variant="body2" color="primary">Selected: {selectedFilm.title}</Typography>
+        )}
+
+        <TextField
+          label="Deadline"
+          type="date"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          fullWidth
         />
-        <button type="button" onClick={handleSearch}>Search</button>
-      </div>
 
-      {searchResults.length > 0 && (
-        <ul id="film-search-results">
-          {searchResults.map((film) => (
-            <li
-              key={film.id}
-              className={selectedFilm?.id === film.id ? "selected" : ""}
-              onClick={() => setSelectedFilm(film)}
-            >
-              <p>{film.title}</p>
-              <p>{film.year} · {film.director}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+        <TextField
+          label="Discussion prompt (optional)"
+          placeholder="What should the group discuss?"
+          value={discussionPrompt}
+          onChange={(e) => setDiscussionPrompt(e.target.value)}
+          fullWidth
+        />
 
-      {selectedFilm && (
-        <p id="selected-film">Selected: {selectedFilm.title}</p>
-      )}
+        {error && <Typography color="error">{error}</Typography>}
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          Deadline
-          <input
-            type="date"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-          />
-        </label>
+        <Button variant="contained" onClick={handleSubmit}>
+          Assign to group
+        </Button>
 
-        <label>
-          Discussion prompt (optional)
-          <input
-            type="text"
-            placeholder="What should the group discuss?"
-            value={discussionPrompt}
-            onChange={(e) => setDiscussionPrompt(e.target.value)}
-          />
-        </label>
-
-        <button type="submit">Assign to group</button>
-
-        {error && <p className="error-message">{error}</p>}
-      </form>
-    </section>
-  );
+      </Stack>
+    </DialogContent>
+  </>
+);
 }
