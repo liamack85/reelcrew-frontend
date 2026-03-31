@@ -37,16 +37,17 @@ export default function FilmPoster({ film, showBadge = true }) {
         flexDirection: "column",
         padding: 1,
         borderRadius: 2,
+        width: "100%",
       }}
     >
       <CardMedia
         component="img"
-        image={film.poster_url}
+        image={film.poster_url || "https://placehold.co/90x135?text=No+Poster"}
         alt={film.title}
         sx={{
           width: "100%",
           height: "auto",
-          objectFit: "contain",
+          objectFit: "cover",
           borderRadius: 1,
         }}
       />
