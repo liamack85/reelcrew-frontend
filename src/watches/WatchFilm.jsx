@@ -14,7 +14,6 @@ const API = import.meta.env.VITE_API;
 
 /**
  * Displays the film details, deadline, group progress, discussion prompt,
- * and host edit/delete controls for a watch event.
  * @param {{ watch: Object, onEditClick: Function }} props
  */
 export default function WatchFilmInfo({ watch, onEditClick }) {
