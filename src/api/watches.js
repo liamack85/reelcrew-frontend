@@ -6,9 +6,9 @@ const API = import.meta.env.VITE_API;
  * @param {number} groupId the watch group ID
  * @returns {Object} the current watch event with film and progress data
  */
-export async function getCurrentWatch(groupId) {
+export async function getCurrentWatch(watchId) {
   const response = await fetch(
-    API + "/group-watches/group/" + groupId + "/current",
+    API + "/group-watches/" + watchId,
   );
   const result = await response.json();
   return result;

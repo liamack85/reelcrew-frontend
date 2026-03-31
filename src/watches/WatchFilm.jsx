@@ -39,7 +39,7 @@ export default function WatchFilmInfo({ watch, onEditClick }) {
 
       if (!res.ok) throw new Error(await res.text());
 
-      navigate("/watch-group/" + id);
+      navigate("/groups/" + watch.group_id)
     } catch (e) {
       setError(e.message);
     }
