@@ -38,7 +38,7 @@ export async function updateDiscussionResponse(token, id, content) {
 export async function deleteDiscussionResponse(token, id) {
   const response = await fetch(API + "/discussion-responses/" + id, {
     method: "DELETE",
-    headers: { Authorization: "Bearr " + token },
+    headers: { Authorization: "Bearer " + token },
   });
   if (!response.ok) {
     const result = await response.text();
