@@ -387,7 +387,7 @@ export default function WatchPage() {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           />
-          <button type="submit">Post response</button>
+          <button type="submit">Comment</button>
         </form>
       </section>
 

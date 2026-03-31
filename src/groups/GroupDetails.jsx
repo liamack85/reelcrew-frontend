@@ -2,8 +2,10 @@ import { deleteGroup, getGroupById, getMembers, joinGroup, leaveGroup } from "..
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth/AuthContext";
+import WatchForm from "../watches/WatchPageForm";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import Dialog from "@mui/material/Dialog";
 import WatchPageList from "../watches/WatchPageList";
 import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
@@ -22,6 +24,7 @@ export default function GroupDetails() {
   const [group, setGroup] = useState(null);
   const [groupMembers, setGroupMembers] = useState(null);
   const navigate = useNavigate();
+  const [watchFormOpen, setWatchFormOpen] = useState(false);
 
   /**
    * Fetch group details and members from the API and update component state.
@@ -96,10 +99,17 @@ export default function GroupDetails() {
           }
           <Button variant="contained" onClick={deleteCurrentGroup}>DELETE group</Button>
           {isHost && (
-          <Button variant="outlined" component={Link} to={"/watch-group/" + id + "/assign"}>
-            Create watch event
+          <Button variant="outlined" onClick={() => setWatchFormOpen(true)}>
+          Create watch event
           </Button>
     )}
+          <Dialog open={watchFormOpen} onClose={() => setWatchFormOpen(false)}>
+          <WatchForm onSuccess={() => {
+            setWatchFormOpen(false);
+            syncGroupDetail(); // refreshes the watch list after assigning
+          }} />
+        </Dialog>
+
         </Box>
       </Typography>
       <p>
@@ -109,7 +119,7 @@ export default function GroupDetails() {
         doloribus distinctio?
       </p>
       <Link to={"/watch-group/" + id + "/watches"}>View watch events</Link>
-      <WatchPageList />
+      <WatchPageList key={watchFormOpen} />
       <p>Active members: {groupMembers.length}</p>
       <Table>
         <TableBody>
