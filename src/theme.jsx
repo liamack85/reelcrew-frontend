@@ -33,6 +33,13 @@ const getDesignTokens = (mode) => ({
           text: { primary: colors.warm },
         }),
   },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: { backgroundColor: colors.dark },
+      },
+    },
+  },
 });
 
 // Wraps MUI ThemeProvider with mode toggle state
