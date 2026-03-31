@@ -17,7 +17,6 @@ import Typography from "@mui/material/Typography";
 
 /**
  * Displays the discussion board for a watch event, including responses and a comment form.
- * Manages its own responses state internally.
  * @param {{ watch: Object }} props
  */
 export default function WatchDiscussion({ watch }) {
