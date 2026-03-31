@@ -3,7 +3,6 @@ import { useAuth } from "../auth/AuthContext";
 import { getAllUserFilms } from "../api/users";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
 import FilmPoster from "../profile/ProfileFilmCard";
 
 /**
@@ -47,11 +46,23 @@ export default function UserWatchlist() {
           <Typography variant="h4" sx={{ mb: 2 }}>
             Watchlist
           </Typography>
-          <Stack direction="row" flexWrap="wrap" gap={2}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
+                md: "repeat(4, 1fr)",
+                lg: "repeat(5, 1fr)",
+                xl: "repeat(6, 1fr)",
+              },
+              gap: 2,
+            }}
+          >
             {watchlist.map((film) => (
               <FilmPoster key={film.id} film={film} />
             ))}
-          </Stack>
+          </Box>
         </Box>
       )}
       {watched.length > 0 && (
@@ -59,11 +70,23 @@ export default function UserWatchlist() {
           <Typography variant="h4" sx={{ mb: 2 }}>
             Watched
           </Typography>
-          <Stack direction="row" flexWrap="wrap" gap={2}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
+                md: "repeat(4, 1fr)",
+                lg: "repeat(5, 1fr)",
+                xl: "repeat(6, 1fr)",
+              },
+              gap: 2,
+            }}
+          >
             {watched.map((film) => (
               <FilmPoster key={film.id} film={film} />
             ))}
-          </Stack>
+          </Box>
         </Box>
       )}
     </Box>

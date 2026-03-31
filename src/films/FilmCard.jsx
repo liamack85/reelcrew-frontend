@@ -65,9 +65,9 @@ export default function FilmCard({
     <Card sx={{ display: "flex", gap: 2, padding: 1 }}>
       <CardMedia
         component="img"
-        image={film.poster_url}
+        image={film.poster_url || "https://placehold.co/80x120?text=No+Poster"}
         alt={film.title}
-        sx={{ width: 80, objectFit: "cover", borderRadius: 1 }}
+        sx={{ width: 80, height: 120, objectFit: "cover", borderRadius: 1 }}
       />
       <CardContent sx={{ flex: 1, padding: 0 }}>
         <Typography
