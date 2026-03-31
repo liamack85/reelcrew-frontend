@@ -75,8 +75,6 @@ export default function WatchPage() {
   const daysLeft = Math.max(0, Math.round((deadlineDate - today) / 86400000));
 
   const isCreator = user?.id === watch.group_creator_id;
-  const currentMember = watch.progress?.members?.find(m => m.user_id === user?.id);
-  const hasWatched = currentMember?.status === "watched";
 
   function handleWatchGroupEdit() {
     setSelectedFilm({ id: watch.film_id, title: watch.title });
@@ -383,18 +381,14 @@ export default function WatchPage() {
         )}
 
         {responseError && <p className="error-message">{responseError}</p>}
-        {hasWatched ? (
-          <form id="new-comment-form" onSubmit={handleCommentSubmit}>
-            <textarea
-              placeholder="Share your thoughts..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            />
-            <button type="submit">Post response</button>
-          </form>
-        ) : (
-          <p className="comment-locked">Mark the film as watched to join the discussion.</p>
-        )}
+        <form id="new-comment-form" onSubmit={handleCommentSubmit}>
+          <textarea
+            placeholder="Share your thoughts..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <button type="submit">Post response</button>
+        </form>
       </section>
 
       <MemberList members={watch.progress?.members} />
