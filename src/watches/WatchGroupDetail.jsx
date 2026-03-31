@@ -1,27 +1,33 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { getCurrentWatch } from "../api/watches";
 import { getFilms } from "../api/films";
-import {
-  getDiscussionResponses,
-  createDiscussionResponse,
-  updateDiscussionResponse,
-  deleteDiscussionResponse,
-} from "../api/discussions";
-import MemberList, { formatDate } from "./MemberList";
+import MemberList from "./MemberList";
+import WatchHeader from "./WatchHeader";
+import WatchFilmInfo from "./WatchFilm";
+import WatchDiscussion from "./WatchDiscussion";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 const API = import.meta.env.VITE_API;
 
 /**
- * Displays the detail page for a group's current watch event, including the film info,
- * deadline countdown, group progress bar, member list, and discussion board.
+ * Displays the detail page for a group's current watch event.
+ * Manages watch data fetching and the edit form.
+ * Layout is composed from WatchHeader, WatchFilmInfo, WatchDiscussion, and MemberList.
  */
-
 export default function WatchPage() {
   const { id } = useParams();
-  const { token, user } = useAuth();
-  const navigate = useNavigate();
+  const { token } = useAuth();
   const [watch, setWatch] = useState(null);
   const [error, setError] = useState(null);
 
@@ -32,15 +38,7 @@ export default function WatchPage() {
   const [deadline, setDeadline] = useState("");
   const [discussionPrompt, setDiscussionPrompt] = useState("");
   const [editError, setEditError] = useState(null);
-
-    // Delete state
-  const [confirmDelete, setConfirmDelete] = useState(false);
-
-  const [responses, setResponses] = useState([]);
-  const [newComment, setNewComment] = useState("");
-  const [editingResponseId, setEditingResponseId] = useState(null);
-  const [editContent, setEditContent] = useState("");
-  const [responseError, setResponseError] = useState(null);
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -54,29 +52,10 @@ export default function WatchPage() {
     fetchData();
   }, [id, token]);
 
-  useEffect(() => {
-    async function fetchResponses() {
-      if (!watch?.id) return;
-      try {
-        const data = await getDiscussionResponses(watch.id);
-        setResponses(data);
-      } catch (e) {
-        setResponseError(e.message);
-      }
-    }
-    fetchResponses();
-  }, [watch?.id]);
-
   if (error) return <p>{error}</p>;
   if (!watch) return <p>No film assigned yet.</p>;
 
-  const today = new Date();
-  const deadlineDate = new Date(watch.deadline);
-  const daysLeft = Math.max(0, Math.round((deadlineDate - today) / 86400000));
-
-  const isCreator = user?.id === watch.group_creator_id;
-
-  function handleWatchGroupEdit() {
+  function handleEditClick() {
     setSelectedFilm({ id: watch.film_id, title: watch.title });
     setDeadline(watch.deadline?.slice(0, 10) ?? "");
     setDiscussionPrompt(watch.discussion_prompt ?? "");
@@ -84,6 +63,7 @@ export default function WatchPage() {
     setSearchResults([]);
     setEditError(null);
     setIsEditing(true);
+    setStatus(watch.status ?? "watching");
   }
 
   async function handleFilmSearch() {
@@ -95,8 +75,7 @@ export default function WatchPage() {
     }
   }
 
-  async function handleEditSubmit(e) {
-    e.preventDefault();
+  async function handleEditSubmit() {
     setEditError(null);
 
     if (!selectedFilm) {
@@ -120,6 +99,7 @@ export default function WatchPage() {
           film_id: selectedFilm.id,
           deadline,
           discussion_prompt: discussionPrompt,
+          status, 
         }),
       });
 
@@ -133,263 +113,105 @@ export default function WatchPage() {
     }
   }
 
-  async function handleDelete() {
-    try {
-      const res = await fetch(API + "/group-watches/" + watch.id, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!res.ok) throw new Error(await res.text());
-
-      navigate("/watch-group/" + id);
-    } catch (e) {
-      setError(e.message);
-    }
-  }
-
-  async function handleCommentSubmit(e) {
-    e.preventDefault();
-    setResponseError(null);
-
-    if (!newComment.trim()) {
-      setResponseError("Comment cannot be empty.");
-      return;
-    }
-
-    try {
-      await createDiscussionResponse(token, watch.id, newComment);
-      setNewComment("");
-      const data = await getDiscussionResponses(watch.id);
-      setResponses(data);
-    } catch (e) {
-      setResponseError(e.message);
-    }
-  }
-
-  function handleEditResponseOpen(response) {
-    setEditingResponseId(response.id);
-    setEditContent(response.content);
-  }
-
-  async function handleEditResponseSubmit(e) {
-    e.preventDefault();
-
-    if (!editContent.trim()) return;
-
-    try {
-      await updateDiscussionResponse(token, editingResponseId, editContent);
-      setEditingResponseId(null);
-      setEditContent("");
-      const data = await getDiscussionResponses(watch.id);
-      setResponses(data);
-    } catch (e) {
-      setResponseError(e.message);
-    }
-  }
-
-  async function handleDeleteResponse(responseId) {
-    try {
-      await deleteDiscussionResponse(token, responseId);
-      const data = await getDiscussionResponses(watch.id);
-      setResponses(data);
-    } catch (e) {
-      setResponseError(e.message);
-    }
-  }
-
   return (
     <div id="watch-page">
-      <section id="watch-header">
-        <h1>{watch.group_name}</h1>
-        <p>{watch.progress?.total} members · Watch group</p>
-      </section>
+      <WatchHeader watch={watch} />
 
-      <section id="now-watching">
-        <h2>Now watching</h2>
+      {/* Two-column layout: poster left, info/edit form right */}
+      <Box sx={{ display: "flex", gap: 4, padding: 3, flexDirection: { xs: "column", sm: "row" } }}>
+        <Box
+          component="img"
+          src={watch.poster_url}
+          alt={watch.title}
+          sx={{ width: { xs: "100%", sm: 250 }, borderRadius: 2, objectFit: "cover", flexShrink: 0 }}
+        />
 
-        {isCreator && !isEditing && (
-          <div className="host-actions">
-            <button onClick={handleWatchGroupEdit}>Edit</button>
-            <button onClick={() => setConfirmDelete(true)}>Delete</button>
-          </div>
-        )}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          {isEditing ? (
+            <Stack spacing={2}>
+              <Typography variant="h5">Edit watch event</Typography>
 
-        {confirmDelete && (
-          <div className="confirm-delete">
-            <p>Are you sure you want to remove <strong>{watch.title}</strong>? This cannot be undone.</p>
-            <button onClick={handleDelete}>Yes, delete</button>
-            <button onClick={() => setConfirmDelete(false)}>Cancel</button>
-          </div>
-        )}
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <TextField
+                  placeholder="Search for a film..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  size="small"
+                  fullWidth
+                />
+                <Button variant="outlined" onClick={handleFilmSearch}>Search</Button>
+              </Box>
 
-        {isEditing ? (
-          <div id="edit-watch-form">
-            <div id="film-search">
-              <input
-                type="text"
-                placeholder="Search for a film..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+              {searchResults.length > 0 && (
+                <Stack spacing={1}>
+                  {searchResults.map((film) => (
+                    <Box
+                      key={film.id}
+                      onClick={() => setSelectedFilm(film)}
+                      sx={{
+                        padding: 1,
+                        borderRadius: 1,
+                        cursor: "pointer",
+                        backgroundColor: selectedFilm?.id === film.id ? "action.selected" : "background.paper",
+                        "&:hover": { backgroundColor: "action.hover" },
+                      }}
+                    >
+                      <Typography variant="body1">{film.title}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {film.year} · {film.director}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              )}
+
+              {selectedFilm && (
+                <Typography variant="body2" color="primary">Selected: {selectedFilm.title}</Typography>
+              )}
+
+              <TextField
+                label="Deadline"
+                type="date"
+                value={deadline}
+                onChange={(e) => setDeadline(e.target.value)}
+                slotProps={{ inputLabel: { shrink: true } }}
+                fullWidth
               />
-              <button type="button" onClick={handleFilmSearch}>Search</button>
-            </div>
+              <FormControl fullWidth>
+                <InputLabel>Status</InputLabel>
+                <Select
+                  value={status}
+                  label="Status"
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <MenuItem value="watching">Watching</MenuItem>
+                  <MenuItem value="complete">Complete</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                label="Discussion prompt (optional)"
+                placeholder="What should the group discuss?"
+                value={discussionPrompt}
+                onChange={(e) => setDiscussionPrompt(e.target.value)}
+                fullWidth
+              />
 
-            {searchResults.length > 0 && (
-              <ul id="film-search-results">
-                {searchResults.map((film) => (
-                  <li
-                    key={film.id}
-                    className={selectedFilm?.id === film.id ? "selected" : ""}
-                    onClick={() => setSelectedFilm(film)}
-                  >
-                    <p>{film.title}</p>
-                    <p>{film.year} · {film.director}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
+              {editError && <Typography color="error">{editError}</Typography>}
 
-            {selectedFilm && (
-              <p id="selected-film">Selected: {selectedFilm.title}</p>
-            )}
+              <Stack direction="row" spacing={1}>
+                <Button variant="contained" onClick={handleEditSubmit}>Save changes</Button>
+                <Button variant="outlined" onClick={() => setIsEditing(false)}>Cancel</Button>
+              </Stack>
+            </Stack>
+          ) : (
+            <WatchFilmInfo watch={watch} onEditClick={handleEditClick} />
+          )}
+        </Box>
+      </Box>
 
-            <form onSubmit={handleEditSubmit}>
-              <label>
-                Deadline
-                <input
-                  type="date"
-                  value={deadline}
-                  onChange={(e) => setDeadline(e.target.value)}
-                />
-              </label>
+      <Divider />
 
-              <label>
-                Discussion prompt (optional)
-                <input
-                  type="text"
-                  placeholder="What should the group discuss?"
-                  value={discussionPrompt}
-                  onChange={(e) => setDiscussionPrompt(e.target.value)}
-                />
-              </label>
-
-              {editError && <p className="error-message">{editError}</p>}
-
-              <button type="submit">Save changes</button>
-              <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-            </form>
-          </div>
-        ) : (
-          <div className="film-feature">
-            <img src={watch.poster_url} alt={watch.title} />
-            <div className="film-feature-info">
-              <h3>{watch.title}</h3>
-              <p>{watch.year} · {watch.director} · {watch.runtime}</p>
-              <p>{watch.genre}</p>
-              <p>{watch.description}</p>
-            </div>
-          </div>
-        )}
-      </section>
-
-      <section id="watch-deadline">
-        <h2>Watch deadline</h2>
-        <p>{formatDate(watch.deadline)}</p>
-        <p>{daysLeft} days left</p>
-      </section>
-
-      <section id="watch-progress">
-        <p>
-          Group progress: {watch.progress?.watched} of {watch.progress?.total} watched
-          — {watch.progress?.percent}%
-        </p>
-        <div className="progress-bar-bg">
-          <div
-            className="progress-bar-fill"
-            style={{ width: watch.progress?.percent + "%" }}
-          />
-        </div>
-      </section>
-
-      {watch.discussion_prompt && (
-        <section id="discussion-prompt">
-          <h2>Discussion prompt</h2>
-          <p>{watch.discussion_prompt}</p>
-        </section>
-      )}
-
-      <section id="discussion-board">
-        <h2>Discussion</h2>
-        {responses.length === 0 ? (
-          <p>No responses yet. Be the first to share your thoughts!</p>
-        ) : (
-          <ul id="response-list">
-            {responses.map((response) => {
-              const isAuthor = user?.id === response.user_id;
-              const wasEdited = response.updated_at !== response.created_at;
-
-              return (
-                <li key={response.id} className="response-item">
-                  <div className="response-header">
-                    <div className="response-avatar">
-                      {response.display_name?.split(" ").map(w => w[0]).join("").toUpperCase()}
-                    </div>
-                    <div className="response-meta">
-                      <span className="response-author">{response.display_name}</span>
-                      <span className="response-date">
-                        {formatDate(response.created_at)}
-                        {wasEdited && <span className="response-edited"> · edited</span>}
-                      </span>
-                    </div>
-
-                    {isAuthor && (
-                      <button
-                        className="response-action"
-                        onClick={() => handleEditResponseOpen(response)}
-                      >
-                        Edit
-                      </button>
-                    )}
-
-                    {(isAuthor || isCreator) && (
-                      <button
-                        className="response-action"
-                        onClick={() => handleDeleteResponse(response.id)}
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </div>
-
-                  {editingResponseId === response.id ? (
-                    <form onSubmit={handleEditResponseSubmit}>
-                      <textarea
-                        value={editContent}
-                        onChange={(e) => setEditContent(e.target.value)}
-                      />
-                      <button type="submit">Save</button>
-                      <button type="button" onClick={() => setEditingResponseId(null)}>Cancel</button>
-                    </form>
-                  ) : (
-                    <p className="response-content">{response.content}</p>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-
-        {responseError && <p className="error-message">{responseError}</p>}
-        <form id="new-comment-form" onSubmit={handleCommentSubmit}>
-          <textarea
-            placeholder="Share your thoughts..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <button type="submit">Comment</button>
-        </form>
-      </section>
+      <WatchDiscussion watch={watch} />
 
       <MemberList members={watch.progress?.members} />
     </div>
