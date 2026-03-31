@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { getCurrentWatch } from "../api/watches";
 import { getFilms } from "../api/films";
-import MemberList from "./MemberList";
+import MemberList, { formatDate } from "./MemberList";
 
 const API = import.meta.env.VITE_API;
 
