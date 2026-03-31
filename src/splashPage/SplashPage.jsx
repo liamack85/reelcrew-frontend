@@ -18,7 +18,7 @@ export default function SplashPage() {
 
   return (
     <Stack direction="row" sx={{ margin: 5, gap: 4, alignItems: "center" }}>
-      {/* existing hero content in a Box */}
+      {/* flex: 1 lets the hero take all remaining space, pushing FeaturedGroup to the right */}
       <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 1 }}>
         <Typography color="primary" variant="s1">
           REELCREW • WATCH TOGETHER
@@ -47,12 +47,10 @@ export default function SplashPage() {
             Browse Films
           </Button>
         </Stack>
-        <Stack
-          direction="row"
-          sx={{ gap: "10px", padding: "10px", justifyContent: "space-around" }}>
+        <Stack direction="row" sx={{ gap: "20px", padding: "10px", ml: 2 }}>
           <Card
             variant="outlined"
-            sx={{ display: "flex", flexDirection: "column" }}>
+            sx={{ display: "flex", flexDirection: "column", minWidth: 180 }}>
             <CardContent sx={{ textAlign: "center" }}>
               <Typography variant="h5">2,384</Typography>
               <Typography variant="body2">Groups Active</Typography>
@@ -60,7 +58,7 @@ export default function SplashPage() {
           </Card>
           <Card
             variant="outlined"
-            sx={{ display: "flex", flexDirection: "column" }}>
+            sx={{ display: "flex", flexDirection: "column", minWidth: 180 }}>
             <CardContent sx={{ textAlign: "center" }}>
               <Typography variant="h5">9,423</Typography>
               <Typography variant="body2">Films Watched</Typography>
@@ -68,7 +66,9 @@ export default function SplashPage() {
           </Card>
         </Stack>
       </Box>
-      <FeaturedGroup />
+      <Box sx={{ display: { flex: 1, xs: "none", md: "block" } }}>
+        <FeaturedGroup />
+      </Box>
     </Stack>
   );
 }

@@ -16,6 +16,7 @@ export default function FeaturedGroup() {
       const groups = await getGroups();
       if (groups?.length) {
         const data = await getWatchesByGroup(groups[0].id);
+        // Merge group fields, first watch record (film/deadline), and full watch array for progress counting
         setGroup({ ...groups[0], ...data[0], watches: data });
       }
     }
@@ -24,17 +25,21 @@ export default function FeaturedGroup() {
 
   if (!group) return null;
 
+  // WatchesByGroups returns status by member, need the number of members that marked the film watched
   const watchedCount = group.watches.filter(
     (w) => w.status === "watched",
   ).length;
+
   const progress =
     Number(group.member_count) > 0
       ? (watchedCount / Number(group.member_count)) * 100
       : 0;
 
+  // deadline comes back as an ISO string — convert to readable "Month Day, Year"
   const dueDate = formatDate(group.deadline);
+
   return (
-    <Card>
+    <Card sx={{ maxWidth: 400 }}>
       {/* Film poster placeholder */}
       <Box sx={{ bgcolor: "error.main", height: 200 }} />
       <CardContent>
