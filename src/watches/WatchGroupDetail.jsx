@@ -202,7 +202,7 @@ export default function WatchPage() {
               </Stack>
             </Stack>
           ) : (
-            <WatchFilmInfo watch={watch} onEditClick={handleEditClick} />
+            <WatchFilmInfo watch={watch} onEditClick={handleEditClick} onWatched={() => getCurrentWatch(id).then(setWatch)} />
           )}
         </Box>
       </Box>
@@ -211,7 +211,7 @@ export default function WatchPage() {
 
       <WatchDiscussion watch={watch} />
 
-      <MemberList members={watch.progress?.members} />
+      {watch.progress?.members && <MemberList members={watch.progress.members} />}
     </div>
   );
 }
