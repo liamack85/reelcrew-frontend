@@ -55,7 +55,7 @@ export default function UserAvatar() {
       <Avatar sx={{ fontSize: "1rem" }}>{initials}</Avatar>
       <Box>
         <Typography>{user.display_name}</Typography>
-        <Typography variant="body2">Random Stats</Typography>
+        <Typography variant="body2">91% On-time rate</Typography>
       </Box>
       {/* open={Boolean(anchorEl)} — truthy HTML element = menu open, null = closed
           anchorEl also tells Menu where to position relative to the trigger element*/}
