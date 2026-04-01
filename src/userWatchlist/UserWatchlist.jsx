@@ -43,7 +43,7 @@ export default function UserWatchlist() {
     <Box sx={{ padding: 3, display: "flex", flexDirection: "column", gap: 4 }}>
       {watchlist.length > 0 && (
         <Box>
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography color="primary" variant="h2" sx={{ mb: 2 }}>
             Watchlist
           </Typography>
           <Box
@@ -70,7 +70,7 @@ export default function UserWatchlist() {
       )}
       {watched.length > 0 && (
         <Box>
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography color="primary" variant="h2" sx={{ mb: 2 }}>
             Watched
           </Typography>
           <Box

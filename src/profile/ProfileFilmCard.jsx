@@ -10,6 +10,7 @@ import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 
 /**
  * A vertical film card showing the poster, title, and an optional status badge.
@@ -56,18 +57,36 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          minHeight: 40,
+          mb: 1,
         }}>
-        <Typography
-          variant="body2"
-          component={Link}
-          to={"/films/" + film.film_id}
-          sx={{ textDecoration: "none", color: "inherit" }}>
-          {film.title}
-        </Typography>
+        <Box sx={{ flex: 1, overflow: "hidden" }}>
+          <Tooltip title="To Film Details" placement="top-start">
+            <Typography
+              variant="body2"
+              component={Link}
+              to={"/films/" + film.film_id}
+              sx={{
+                textDecoration: "none",
+                color: "inherit",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}>
+              {film.title}
+            </Typography>
+          </Tooltip>
+        </Box>
         {onRemove && (
-          <IconButton size="small" onClick={handleRemove}>
-            <DeleteIcon fontSize="small" />
-          </IconButton>
+          <Tooltip title="Remove" placement="top-end">
+            <IconButton
+              size="small"
+              onClick={handleRemove}
+              sx={{ alignSelf: "flex-start" }}>
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
         )}
       </Box>
       <CardMedia
@@ -82,7 +101,13 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
         }}
       />
       <CardContent
-        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          padding: "4px 0 0 0",
+          "&:last-child": { paddingBottom: "4px" },
+        }}>
         {showBadge && (
           <Box
             sx={{
