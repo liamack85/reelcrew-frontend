@@ -23,7 +23,13 @@ import Tooltip from "@mui/material/Tooltip";
  * @param {Object} props.film - User film object. Expected fields: id, film_id, title, poster_url, status.
  * @param {boolean} [props.showBadge=true] - Whether to show the watched/watchlist toggle chip.
  */
-export default function FilmPoster({ film, showBadge = true, onRemove }) {
+export default function FilmPoster({
+  film,
+  showBadge = true,
+  onRemove,
+  onStatusChange,
+}) {
+  // ← NEW: onStatusChange added to props
   const { token } = useAuth();
   const [status, setStatus] = useState(film.status);
 
@@ -31,6 +37,7 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
     const newStatus = status === "watched" ? "watchlist" : "watched";
     await updateFilmStatus(token, film.id, newStatus);
     setStatus(newStatus);
+    if (onStatusChange) onStatusChange(film.id, newStatus); // ← NEW: notify parent of status change
   };
 
   const handleRemove = async () => {
@@ -50,7 +57,8 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
         padding: 1,
         borderRadius: 2,
         width: "100%",
-      }}>
+      }}
+    >
       {/* Top row: title left, delete button right */}
       <Box
         sx={{
@@ -59,7 +67,8 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
           alignItems: "center",
           minHeight: 40,
           mb: 1,
-        }}>
+        }}
+      >
         <Box sx={{ flex: 1, overflow: "hidden" }}>
           <Tooltip title="To Film Details" placement="top-start">
             <Typography
@@ -73,7 +82,8 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
-              }}>
+              }}
+            >
               {film.title}
             </Typography>
           </Tooltip>
@@ -83,7 +93,8 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
             <IconButton
               size="small"
               onClick={handleRemove}
-              sx={{ alignSelf: "flex-start" }}>
+              sx={{ alignSelf: "flex-start" }}
+            >
               <DeleteIcon fontSize="small" />
             </IconButton>
           </Tooltip>
@@ -107,14 +118,16 @@ export default function FilmPoster({ film, showBadge = true, onRemove }) {
           flexGrow: 1,
           padding: "4px 0 0 0",
           "&:last-child": { paddingBottom: "4px" },
-        }}>
+        }}
+      >
         {showBadge && (
           <Box
             sx={{
               display: "flex",
               justifyContent: status === "watched" ? "flex-end" : "flex-start",
               mt: "auto",
-            }}>
+            }}
+          >
             <Chip
               label={status === "watched" ? "Watched" : "Watchlist"}
               color={status === "watched" ? "success" : "default"}

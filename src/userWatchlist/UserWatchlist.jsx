@@ -24,6 +24,10 @@ export default function UserWatchlist() {
     fetchFilms();
   }, [token]);
 
+  const handleStatusChange = (id, newStatus) => {
+    setFilms(films.map((f) => (f.id === id ? { ...f, status: newStatus } : f)));
+  };
+
   if (films === null) return <Typography>Loading...</Typography>;
 
   if (films.length === 0)
@@ -57,12 +61,14 @@ export default function UserWatchlist() {
                 xl: "repeat(6, 1fr)",
               },
               gap: 2,
-            }}>
+            }}
+          >
             {watchlist.map((film) => (
               <FilmPoster
                 key={film.id}
                 film={film}
                 onRemove={(id) => setFilms(films.filter((f) => f.id !== id))}
+                onStatusChange={handleStatusChange}
               />
             ))}
           </Box>
@@ -84,12 +90,14 @@ export default function UserWatchlist() {
                 xl: "repeat(6, 1fr)",
               },
               gap: 2,
-            }}>
+            }}
+          >
             {watched.map((film) => (
               <FilmPoster
                 key={film.id}
                 film={film}
                 onRemove={(id) => setFilms(films.filter((f) => f.id !== id))}
+                onStatusChange={handleStatusChange}
               />
             ))}
           </Box>
