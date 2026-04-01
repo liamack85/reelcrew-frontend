@@ -53,28 +53,25 @@ export async function assignWatch(
 }
 
 /**
- * Marks the current user as having watched the group's current film
+ * Marks the current user as having watched a specific watch event.
  *
- * @param {string} token the bearer token for authentication
- * @param {number} groupId the watch group ID
- * @returns {Object} the updated watch progress
+ * @param {string} token - Bearer token for authentication
+ * @param {number} watchId - The watch event ID
+ * @returns {Promise<Object>} The updated progress row
  */
-export async function markWatched(token, groupId) {
-  try {
-    const response = await fetch(API + "/groups/" + groupId + "/progress", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({ groupId }),
-    });
-    const result = await response.json();
-    if (!response.ok) throw Error(result.message);
-    return result;
-  } catch (e) {
-    console.log("CANNOT CAST VOTES: ", e);
-  }
+export async function markWatched(token, watchId, status) {
+  console.debug("markWatched hitting", API + "/group-watches/" + watchId + "/progress");
+  const response = await fetch(API + "/group-watches/" + watchId + "/progress", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify({ status }),
+  });
+  const result = await response.json();
+  if (!response.ok) throw Error(result.message);
+  return result;
 }
 
 /**

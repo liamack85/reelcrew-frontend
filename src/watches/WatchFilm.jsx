@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { formatDate } from "./MemberList";
+import { markWatched } from "../api/watches";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -17,7 +18,7 @@ const API = import.meta.env.VITE_API;
  * and host edit/delete controls for a watch event.
  * @param {{ watch: Object, onEditClick: Function }} props
  */
-export default function WatchFilmInfo({ watch, onEditClick }) {
+export default function WatchFilmInfo({ watch, onEditClick, onWatched }) {
   const { id } = useParams();
   const { token, user } = useAuth();
   const navigate = useNavigate();
@@ -25,6 +26,21 @@ export default function WatchFilmInfo({ watch, onEditClick }) {
   const [error, setError] = useState(null);
 
   const isCreator = user?.id === watch.group_creator_id;
+
+  const currentMember = watch.progress?.members?.find((m) => m.user_id === user?.id);
+  const [hasWatched, setHasWatched] = useState(currentMember?.status === "watched");
+
+  async function handleMarkWatched() {
+    console.debug("handleMarkWatched fired", watch.id, token);
+    const newStatus = hasWatched ? "pending" : "watched";
+    try {
+      await markWatched(token, watch.id, newStatus);
+      setHasWatched(!hasWatched);
+      onWatched?.();
+    } catch (e) {
+      setError(e.message);
+    }
+  }
 
   const today = new Date();
   const deadlineDate = new Date(watch.deadline);
@@ -52,7 +68,16 @@ export default function WatchFilmInfo({ watch, onEditClick }) {
         {watch.year} · {watch.director} · {watch.runtime}
       </Typography>
       {watch.genre && <Chip label={watch.genre} size="small" sx={{ width: "fit-content" }} />}
-      <Chip label={watch.status} color={watch.status === "complete" ? "success" : ""} size="small" sx={{ width: "fit-content" }} />
+      {user && (
+      <Chip
+        label={hasWatched ? "Watched" : "Mark as watched"}
+        color={hasWatched ? "success" : "default"}
+        size="small"
+        onClick={handleMarkWatched}
+        sx={{ width: "fit-content", cursor: "pointer" }}
+      />
+    )}
+
       <Typography variant="body1">{watch.description}</Typography>
 
       <Divider />
