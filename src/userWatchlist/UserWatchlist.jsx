@@ -43,7 +43,7 @@ export default function UserWatchlist() {
     <Box sx={{ padding: 3, display: "flex", flexDirection: "column", gap: 4 }}>
       {watchlist.length > 0 && (
         <Box>
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography color="primary" variant="h2" sx={{ mb: 2 }}>
             Watchlist
           </Typography>
           <Box
@@ -57,17 +57,20 @@ export default function UserWatchlist() {
                 xl: "repeat(6, 1fr)",
               },
               gap: 2,
-            }}
-          >
+            }}>
             {watchlist.map((film) => (
-              <FilmPoster key={film.id} film={film} />
+              <FilmPoster
+                key={film.id}
+                film={film}
+                onRemove={(id) => setFilms(films.filter((f) => f.id !== id))}
+              />
             ))}
           </Box>
         </Box>
       )}
       {watched.length > 0 && (
         <Box>
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography color="primary" variant="h2" sx={{ mb: 2 }}>
             Watched
           </Typography>
           <Box
@@ -81,10 +84,13 @@ export default function UserWatchlist() {
                 xl: "repeat(6, 1fr)",
               },
               gap: 2,
-            }}
-          >
+            }}>
             {watched.map((film) => (
-              <FilmPoster key={film.id} film={film} />
+              <FilmPoster
+                key={film.id}
+                film={film}
+                onRemove={(id) => setFilms(films.filter((f) => f.id !== id))}
+              />
             ))}
           </Box>
         </Box>
