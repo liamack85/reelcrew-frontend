@@ -87,7 +87,7 @@ export async function createGroup(token, name, creator_id) {
  */
 
 export async function joinGroup(token, id, user_id, role) {
-  const response = await fetch(API + "/watch-groups/"+id+"/members", {
+  const response = await fetch(API + "/watch-groups/" + id + "/members", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -113,7 +113,7 @@ export async function leaveGroup(token, id, user_id) {
     throw Error("You are not signed in.");
   }
 
-  const response = await fetch(API+"/watch-groups/"+id+"/members", {
+  const response = await fetch(API + "/watch-groups/" + id + "/members", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -137,7 +137,6 @@ export async function deleteGroup(token, id) {
     const result = await response.json();
     throw Error(result.message);
   }
-
 }
 
 export async function getMyGroups(token) {
@@ -156,4 +155,16 @@ export async function getWatchesByGroup(groupId) {
   const result = await response.json();
   if (!response.ok) throw Error(result.message);
   return result;
+}
+
+export async function getCurrentWatchForGroup(groupId) {
+  try {
+    const response = await fetch(
+      API + "/group-watches/group/" + groupId + "/current",
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.log("CANNOT GET CURRENT WATCH: ", e);
+  }
 }
