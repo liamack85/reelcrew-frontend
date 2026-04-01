@@ -1,12 +1,14 @@
 import { Link } from "react-router";
 import { useState } from "react";
 import { useAuth } from "../auth/AuthContext";
-import { updateFilmStatus } from "../api/films";
+import { updateFilmStatus, removeFromWatchlist } from "../api/films";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 
 /**
@@ -20,7 +22,7 @@ import Typography from "@mui/material/Typography";
  * @param {Object} props.film - User film object. Expected fields: id, film_id, title, poster_url, status.
  * @param {boolean} [props.showBadge=true] - Whether to show the watched/watchlist toggle chip.
  */
-export default function FilmPoster({ film, showBadge = true }) {
+export default function FilmPoster({ film, showBadge = true, onRemove }) {
   const { token } = useAuth();
   const [status, setStatus] = useState(film.status);
 
@@ -28,6 +30,15 @@ export default function FilmPoster({ film, showBadge = true }) {
     const newStatus = status === "watched" ? "watchlist" : "watched";
     await updateFilmStatus(token, film.id, newStatus);
     setStatus(newStatus);
+  };
+
+  const handleRemove = async () => {
+    try {
+      await removeFromWatchlist(token, film.id);
+      onRemove(film.id);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -38,8 +49,27 @@ export default function FilmPoster({ film, showBadge = true }) {
         padding: 1,
         borderRadius: 2,
         width: "100%",
-      }}
-    >
+      }}>
+      {/* Top row: title left, delete button right */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}>
+        <Typography
+          variant="body2"
+          component={Link}
+          to={"/films/" + film.film_id}
+          sx={{ textDecoration: "none", color: "inherit" }}>
+          {film.title}
+        </Typography>
+        {onRemove && (
+          <IconButton size="small" onClick={handleRemove}>
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        )}
+      </Box>
       <CardMedia
         component="img"
         image={film.poster_url || "https://placehold.co/90x135?text=No+Poster"}
@@ -52,24 +82,14 @@ export default function FilmPoster({ film, showBadge = true }) {
         }}
       />
       <CardContent
-        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
-      >
-        <Typography
-          variant="body2"
-          component={Link}
-          to={"/films/" + film.film_id}
-          sx={{ textDecoration: "none", color: "inherit" }}
-        >
-          {film.title}
-        </Typography>
+        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
         {showBadge && (
           <Box
             sx={{
               display: "flex",
               justifyContent: status === "watched" ? "flex-end" : "flex-start",
               mt: "auto",
-            }}
-          >
+            }}>
             <Chip
               label={status === "watched" ? "Watched" : "Watchlist"}
               color={status === "watched" ? "success" : "default"}

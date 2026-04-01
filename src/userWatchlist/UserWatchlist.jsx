@@ -57,10 +57,13 @@ export default function UserWatchlist() {
                 xl: "repeat(6, 1fr)",
               },
               gap: 2,
-            }}
-          >
+            }}>
             {watchlist.map((film) => (
-              <FilmPoster key={film.id} film={film} />
+              <FilmPoster
+                key={film.id}
+                film={film}
+                onRemove={(id) => setFilms(films.filter((f) => f.id !== id))}
+              />
             ))}
           </Box>
         </Box>
@@ -81,10 +84,13 @@ export default function UserWatchlist() {
                 xl: "repeat(6, 1fr)",
               },
               gap: 2,
-            }}
-          >
+            }}>
             {watched.map((film) => (
-              <FilmPoster key={film.id} film={film} />
+              <FilmPoster
+                key={film.id}
+                film={film}
+                onRemove={(id) => setFilms(films.filter((f) => f.id !== id))}
+              />
             ))}
           </Box>
         </Box>
