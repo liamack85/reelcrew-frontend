@@ -98,7 +98,7 @@ export default function WatchPage() {
           film_id: selectedFilm.id,
           deadline,
           discussion_prompt: discussionPrompt,
-          status, 
+          status,
         }),
       });
 
@@ -116,12 +116,23 @@ export default function WatchPage() {
     <div id="watch-page">
       <WatchHeader watch={watch} />
 
-      <Box sx={{ display: "flex", gap: 4, padding: 3, flexDirection: { xs: "column", sm: "row" } }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 4,
+          padding: 3,
+          flexDirection: { xs: "column", sm: "row" },
+        }}>
         <Box
           component="img"
           src={watch.poster_url}
           alt={watch.title}
-          sx={{ width: { xs: "100%", sm: 250 }, borderRadius: 2, objectFit: "cover", flexShrink: 0 }}
+          sx={{
+            width: { xs: "100%", sm: 250 },
+            borderRadius: 2,
+            objectFit: "cover",
+            flexShrink: 0,
+          }}
         />
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -137,7 +148,9 @@ export default function WatchPage() {
                   size="small"
                   fullWidth
                 />
-                <Button variant="outlined" onClick={handleFilmSearch}>Search</Button>
+                <Button variant="outlined" onClick={handleFilmSearch}>
+                  Search
+                </Button>
               </Box>
 
               {searchResults.length > 0 && (
@@ -150,10 +163,12 @@ export default function WatchPage() {
                         padding: 1,
                         borderRadius: 1,
                         cursor: "pointer",
-                        backgroundColor: selectedFilm?.id === film.id ? "action.selected" : "background.paper",
+                        backgroundColor:
+                          selectedFilm?.id === film.id
+                            ? "action.selected"
+                            : "background.paper",
                         "&:hover": { backgroundColor: "action.hover" },
-                      }}
-                    >
+                      }}>
                       <Typography variant="body1">{film.title}</Typography>
                       <Typography variant="body2" color="text.secondary">
                         {film.year} · {film.director}
@@ -164,7 +179,9 @@ export default function WatchPage() {
               )}
 
               {selectedFilm && (
-                <Typography variant="body2" color="primary">Selected: {selectedFilm.title}</Typography>
+                <Typography variant="body2" color="primary">
+                  Selected: {selectedFilm.title}
+                </Typography>
               )}
 
               <TextField
@@ -180,8 +197,7 @@ export default function WatchPage() {
                 <Select
                   value={status}
                   label="Status"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
+                  onChange={(e) => setStatus(e.target.value)}>
                   <MenuItem value="watching">Watching</MenuItem>
                   <MenuItem value="complete">Complete</MenuItem>
                 </Select>
@@ -197,12 +213,20 @@ export default function WatchPage() {
               {editError && <Typography color="error">{editError}</Typography>}
 
               <Stack direction="row" spacing={1}>
-                <Button variant="contained" onClick={handleEditSubmit}>Save changes</Button>
-                <Button variant="outlined" onClick={() => setIsEditing(false)}>Cancel</Button>
+                <Button variant="contained" onClick={handleEditSubmit}>
+                  Save changes
+                </Button>
+                <Button variant="outlined" onClick={() => setIsEditing(false)}>
+                  Cancel
+                </Button>
               </Stack>
             </Stack>
           ) : (
-            <WatchFilmInfo watch={watch} onEditClick={handleEditClick} onWatched={() => getCurrentWatch(id).then(setWatch)} />
+            <WatchFilmInfo
+              watch={watch}
+              onEditClick={handleEditClick}
+              onWatched={() => getCurrentWatch(id).then(setWatch)}
+            />
           )}
         </Box>
       </Box>
@@ -211,7 +235,9 @@ export default function WatchPage() {
 
       <WatchDiscussion watch={watch} />
 
-      {watch.progress?.members && <MemberList members={watch.progress.members} />}
+      {watch.progress?.members && (
+        <MemberList members={watch.progress.members} />
+      )}
     </div>
   );
 }
