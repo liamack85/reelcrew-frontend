@@ -1,3 +1,9 @@
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
 /**
  * Displays a list of group members with their role, watch status, and avatar initials.
  *
@@ -7,39 +13,42 @@
 
 export default function MemberList({ members }) {
   if (!members) {
-    return <p>There are no members. Add some!</p>;
+    return <Typography>There are no members. Add some!</Typography>;
   }
 
   return (
-    <section id="member-list">
-      <h2>Members</h2>
-      <ul>
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h5" sx={{ mb: 2 }}>
+        Members
+      </Typography>
+      <Stack spacing={1}>
         {members.map((member) => (
-          <li key={member.user_id} className="member-row">
-            <div className="member-avatar">
+          <Box
+            key={member.user_id}
+            sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Avatar sx={{ width: 40, height: 40 }}>
               {getInitials(member.display_name)}
-            </div>
+            </Avatar>
 
-            <div className="member-info">
-              <p>{member.display_name}</p>
-              <p className="member-details">
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="body1">{member.display_name}</Typography>
+              <Typography variant="body2" color="text.secondary">
                 {member.role === "host" ? "Host" : "Member"}
                 {member.status === "watched" && member.watched_at
                   ? " · Watched " + formatDate(member.watched_at)
-                  : " · Added to watchlist"}
-              </p>
-            </div>
+                  : " · Pending"}
+              </Typography>
+            </Box>
 
-            <p
-              className={
-                member.status === "watched" ? "badge-watched" : "badge-pending"
-              }>
-              {member.status === "watched" ? "Watched" : "Pending"}
-            </p>
-          </li>
+            <Chip
+              label={member.status === "watched" ? "Watched" : "Pending"}
+              color={member.status === "watched" ? "success" : "default"}
+              size="small"
+            />
+          </Box>
         ))}
-      </ul>
-    </section>
+      </Stack>
+    </Box>
   );
 }
 
@@ -67,5 +76,9 @@ export function getInitials(name) {
 
 export function formatDate(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
+  return date.toLocaleDateString(undefined, {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 }
