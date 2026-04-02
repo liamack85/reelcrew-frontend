@@ -12,9 +12,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import CheckCircle from "@mui/icons-material/CheckCircle";
-// import ImageIcon from '@mui/material/icons/Image';
-// import WorkIcon from '@mui/material/icons/Work';
-// import BeachAccessIcon from '@mui/material/icons/BeachAccess';
 
 /**
  *  Public landing page. Lazy-gates the "Start Watch Group" button —
