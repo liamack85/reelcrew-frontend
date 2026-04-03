@@ -7,6 +7,11 @@ import Typography from "@mui/material/Typography";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router";
 import FeaturedGroup from "./FeaturedGroup";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import CheckCircle from "@mui/icons-material/CheckCircle";
 
 /**
  *  Public landing page. Lazy-gates the "Start Watch Group" button —
@@ -27,10 +32,30 @@ export default function SplashPage() {
         <Typography color="primary" fontStyle="italic" variant="h2">
           on time.
         </Typography>
-        <Typography variant="body1">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. A,
-          aspernatur!
+        <Typography variant="body1" component="p">
+          Plan, pick, and watch together. Browse films, build your personal watchlist, create or join watch groups, and sync progress so everyone hits the same deadline — no scheduling chaos required.
         </Typography>
+    <List>
+      <ListItem>
+        <ListItemAvatar>
+            <CheckCircle color="secondary" />
+        </ListItemAvatar>
+        <ListItemText>Browse curated films and personalized picks</ListItemText>
+      </ListItem>
+      <ListItem>
+        <ListItemAvatar>
+            <CheckCircle color="secondary" />
+        </ListItemAvatar>
+        <ListItemText>Build and share private watchlists</ListItemText>
+      </ListItem>
+      <ListItem>
+        <ListItemAvatar>
+            <CheckCircle color="secondary" />
+        </ListItemAvatar>
+        <ListItemText>Join groups to track progress and meet shared deadlines</ListItemText>
+      </ListItem>
+    </List>        
+        
         <Stack direction="row" spacing={2}>
           {/* Lazy gate — opens auth modal if logged out, navigates to groups if logged in */}
           <Button
